@@ -8,7 +8,10 @@ namespace GCConsole
         {
             Console.WriteLine("Hello, World!");
 
-            try
+            string diretorioAtual = AppDomain.CurrentDomain.BaseDirectory;
+            Console.WriteLine("Diretório Local da Aplicação: " + diretorioAtual);
+
+            /*try
             {
                 Favorecido newFavorecido = new(1, "João");
                 Console.WriteLine(newFavorecido.Id);
@@ -26,8 +29,9 @@ namespace GCConsole
             {
                 Console.WriteLine(e.Message);
                // throw;
-            }
+            }*/
             Console.WriteLine("Fim");
+            Console.ReadLine();
         }
     }
 }

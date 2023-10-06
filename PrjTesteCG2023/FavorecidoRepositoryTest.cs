@@ -1,17 +1,19 @@
-using CGEntity.Entities;
+using CGServer.Repository;
 
 namespace CGTeste
 
 
 {
-    public class FavorecidoTest
+    public class FavorecidoRepositoryTest
     {
         [Fact]
         public void TestCreateClass1()
         {
             int id = 1;
             string nomeFavorecido = "Novo Favorecido";
-            Favorecido favorecido = new Favorecido(id, nomeFavorecido);
+            CGServer.Repository.
+            
+            FavorecidoRepository favorecido = new FavorecidoRepository(id, nomeFavorecido);
             Assert.Equal(id, favorecido.Id);
             Assert.Equal(nomeFavorecido, favorecido.Nome);
         }
@@ -21,7 +23,7 @@ namespace CGTeste
         {
             int id = 0;
             string nomeFavorecido = "Novo Favorecido";
-            Favorecido favorecido = new Favorecido(id, nomeFavorecido);
+            FavorecidoRepository favorecido = new FavorecidoRepository(id, nomeFavorecido);
             Assert.NotEqual(id, favorecido.Id);
             Assert.Equal(nomeFavorecido, favorecido.Nome);
         }
@@ -31,7 +33,7 @@ namespace CGTeste
         {
             int id = 1;
             string nomeFavorecido = string.Empty;
-            Assert.Throws<ArgumentException>(() => new Favorecido(id, nomeFavorecido));
+            Assert.Throws<ArgumentException>(() => new FavorecidoRepository(id, nomeFavorecido));
         }
     }
 }

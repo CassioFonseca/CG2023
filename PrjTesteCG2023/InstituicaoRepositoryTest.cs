@@ -1,17 +1,17 @@
-using CGEntity.Entities;
+using CGServer.Repository;
 
 namespace CGTeste
 
 
 {
-    public class InstituicaoTest
+    public class InstituicaoRepositoryTest
     {
         [Fact]
         public void TestCreateClass1()
         {
             int id = 1;
             string nomeInstituicao = "Nova Insituicao";
-            Instituicao instituicao = new Instituicao(id, nomeInstituicao);
+            InstituicaoRepository instituicao = new InstituicaoRepository(id, nomeInstituicao);
             Assert.Equal(id, instituicao.Id);
             Assert.Equal(nomeInstituicao, instituicao.Nome);
         }
@@ -21,7 +21,7 @@ namespace CGTeste
         {
             int id = 0;
             string nomeInstituicao = "Nova Insituicao";
-            Instituicao instituicao = new Instituicao(id, nomeInstituicao);
+            InstituicaoRepository instituicao = new InstituicaoRepository(id, nomeInstituicao);
             Assert.NotEqual(id, instituicao.Id);
             Assert.Equal(nomeInstituicao, instituicao.Nome);
         }
@@ -31,7 +31,7 @@ namespace CGTeste
         {
             int id = 1;
             string nomeInstituicao = string.Empty;
-            Assert.Throws<ArgumentException>(() => new Instituicao(id, nomeInstituicao));
+            Assert.Throws<ArgumentException>(() => new InstituicaoRepository(id, nomeInstituicao));
         }
     }
 }

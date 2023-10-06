@@ -1,10 +1,11 @@
 using CGEntity.Entities;
+using CGServer.Repository;
 
 namespace CGTeste
 
 
 {
-    public class LancamentoTest
+    public class LancamentoRepositoryTest
     {
         [Fact]
         public void TestCreateClass1()
@@ -21,7 +22,7 @@ namespace CGTeste
             string descricao = "Nova descricao";
             double valor = 1000.30;
             bool recorrente = false;
-            Lancamento lancamento = new Lancamento(id, dataLancamento, idFavorecido, idPagador, idModalidade, idInstituicao, idCategoria, idSubCategoria, idFornecedor, descricao, valor, recorrente);
+            LancamentoRepository lancamento = new LancamentoRepository(id, dataLancamento, idFavorecido, idPagador, idModalidade, idInstituicao, idCategoria, idSubCategoria, idFornecedor, descricao, valor, recorrente);
             Assert.Equal(id, lancamento.Id);
             Assert.Equal(dataLancamento, lancamento.Data);
             Assert.Equal(idFavorecido, lancamento.IdFavorecido);
@@ -51,7 +52,7 @@ namespace CGTeste
             string descricao = "Nova descricao";
             double valor = 1000.30;
             bool recorrente = false;
-            Lancamento lancamento = new Lancamento(id, dataLancamento, idFavorecido, idPagador, idModalidade, idInstituicao, idCategoria, idSubCategoria, idFornecedor, descricao, valor, recorrente);
+            LancamentoRepository lancamento = new LancamentoRepository(id, dataLancamento, idFavorecido, idPagador, idModalidade, idInstituicao, idCategoria, idSubCategoria, idFornecedor, descricao, valor, recorrente);
             Assert.NotEqual(id, lancamento.Id);
         }
 
@@ -70,13 +71,13 @@ namespace CGTeste
             string descricao = "Nova descricao";
             double valor = 1000.30;
             bool recorrente = false;
-            Assert.Throws<ArgumentException>(() => new Lancamento(id, dataLancamento, 0, idPagador, idModalidade,
+            Assert.Throws<ArgumentException>(() => new LancamentoRepository(id, dataLancamento, 0, idPagador, idModalidade,
                 idInstituicao, idCategoria, idSubCategoria, idFornecedor, descricao, valor, recorrente));
-            Assert.Throws<ArgumentException>(() => new Lancamento(id, dataLancamento, idFavorecido, 0, idModalidade,
+            Assert.Throws<ArgumentException>(() => new LancamentoRepository(id, dataLancamento, idFavorecido, 0, idModalidade,
                 idInstituicao, idCategoria, idSubCategoria, idFornecedor, descricao, valor, recorrente));
-            Assert.Throws<ArgumentException>(() => new Lancamento(id, dataLancamento, idFavorecido, idPagador, 0,
+            Assert.Throws<ArgumentException>(() => new LancamentoRepository(id, dataLancamento, idFavorecido, idPagador, 0,
                 idInstituicao, idCategoria, idSubCategoria, idFornecedor, descricao, valor, recorrente));
-            Assert.Throws<ArgumentException>(() => new Lancamento(id, dataLancamento, idFavorecido, idPagador, idModalidade, 0,
+            Assert.Throws<ArgumentException>(() => new LancamentoRepository(id, dataLancamento, idFavorecido, idPagador, idModalidade, 0,
                 idCategoria, idSubCategoria, idFornecedor, descricao, valor, recorrente));
 
         }

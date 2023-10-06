@@ -1,17 +1,18 @@
 using CGEntity.Entities;
+using CGServer.Repository;
 
 namespace CGTeste
 
 
 {
-    public class PagadorTest
+    public class PagadorRepositoryTest
     {
         [Fact]
         public void TestCreateClass1()
         {
             int id = 1;
             string nomePagador = "Novo Pagador";
-            Pagador pagador = new Pagador(id, nomePagador);
+            PagadorRepository pagador = new PagadorRepository(id, nomePagador);
             Assert.Equal(id, pagador.Id);
             Assert.Equal(nomePagador, pagador.Nome);
         }
@@ -21,7 +22,7 @@ namespace CGTeste
         {
             int id = 0;
             string nomePagador = "Novo Pagador";
-            Pagador pagador = new Pagador(id, nomePagador);
+            PagadorRepository pagador = new PagadorRepository(id, nomePagador);
             Assert.NotEqual(id, pagador.Id);
             Assert.Equal(nomePagador, pagador.Nome);
         }
@@ -31,7 +32,7 @@ namespace CGTeste
         {
             int id = 1;
             string nomePagador = string.Empty;
-            Assert.Throws<ArgumentException>(() => new Pagador(id, nomePagador));
+            Assert.Throws<ArgumentException>(() => new PagadorRepository(id, nomePagador));
         }
     }
 }

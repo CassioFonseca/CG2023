@@ -1,17 +1,17 @@
-using CGEntity.Entities;
+using CGServer.Repository;
 
 namespace CGTeste
 
 
 {
-    public class FornecedorTest
+    public class FornecedorRepositoryTest
     {
         [Fact]
         public void TestCreateClass1()
         {
             int id = 1;
             string nomeFornecedor = "Novo Fornecedor";
-            Fornecedor fornecedor = new Fornecedor(id, nomeFornecedor);
+            FornecedorRepository fornecedor = new FornecedorRepository(id, nomeFornecedor);
             Assert.Equal(id, fornecedor.Id);
             Assert.Equal(nomeFornecedor, fornecedor.Nome);
         }
@@ -21,7 +21,7 @@ namespace CGTeste
         {
             int id = 0;
             string nomeFornecedor = "Novo Fornecedor";
-            Fornecedor fornecedor = new Fornecedor(id, nomeFornecedor);
+            FornecedorRepository fornecedor = new FornecedorRepository(id, nomeFornecedor);
             Assert.NotEqual(id, fornecedor.Id);
             Assert.Equal(nomeFornecedor, fornecedor.Nome);
         }
@@ -31,7 +31,7 @@ namespace CGTeste
         {
             int id = 1;
             string nomeFornecedor = string.Empty;
-            Assert.Throws<ArgumentException>(() => new Fornecedor(id, nomeFornecedor));
+            Assert.Throws<ArgumentException>(() => new FornecedorRepository(id, nomeFornecedor));
         }
     }
 }

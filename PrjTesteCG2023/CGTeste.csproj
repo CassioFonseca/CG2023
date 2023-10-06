@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CGServer\CGServer.csproj" />
     <ProjectReference Include="..\GCEntity\CGEntity.csproj" />
   </ItemGroup>
 

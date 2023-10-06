@@ -1,17 +1,18 @@
 using CGEntity.Entities;
+using CGServer.Repository;
 
 namespace CGTeste
 
 
 {
-    public class ModalidadeTest
+    public class ModalidadeRepositoryTest
     {
         [Fact]
         public void TestCreateClass1()
         {
             int id = 1;
             string descricaoModalidade = "Nova Modalidade";
-            Modalidade modalidade = new Modalidade(id, descricaoModalidade);
+            ModalidadeRepository modalidade = new ModalidadeRepository(id, descricaoModalidade);
             Assert.Equal(id, modalidade.Id);
             Assert.Equal(descricaoModalidade, modalidade.Descricao);
         }
@@ -21,7 +22,7 @@ namespace CGTeste
         {
             int id = 0;
             string descricaoModalidade = "Nova Modalidade";
-            Modalidade modalidade = new Modalidade(id, descricaoModalidade);
+            ModalidadeRepository modalidade = new ModalidadeRepository(id, descricaoModalidade);
             Assert.NotEqual(id, modalidade.Id);
             Assert.Equal(descricaoModalidade, modalidade.Descricao);
         }
@@ -31,7 +32,7 @@ namespace CGTeste
         {
             int id = 1;
             string descricaoModalidade = string.Empty;
-            Assert.Throws<ArgumentException>(() => new Modalidade(id, descricaoModalidade));
+            Assert.Throws<ArgumentException>(() => new ModalidadeRepository(id, descricaoModalidade));
         }
     }
 }

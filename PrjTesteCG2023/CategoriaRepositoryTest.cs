@@ -1,17 +1,17 @@
-using CGEntity.Entities;
+using CGServer.Repository;
 
 namespace CGTeste
 
 
 {
-    public class CategoriaTest
+    public class CategoriaRepositoryTest
     {
         [Fact]
         public void TestCreateClass1()
         {
             int id = 1;
             string descricaoCategoria = "Nova categoria";
-            Categoria categoria = new Categoria(id, descricaoCategoria);
+            CategoriaRepository categoria = new CategoriaRepository(id, descricaoCategoria);
             Assert.Equal(id, categoria.Id);
             Assert.Equal(descricaoCategoria, categoria.Descricao);
         }
@@ -21,7 +21,7 @@ namespace CGTeste
         {
             int id = 0;
             string descricaoCategoria = "Nova categoria";
-            Categoria categoria = new Categoria(id, descricaoCategoria);
+            CategoriaRepository categoria = new CategoriaRepository(id, descricaoCategoria);
             Assert.NotEqual(id, categoria.Id);
             Assert.Equal(descricaoCategoria, categoria.Descricao);
         }
@@ -31,7 +31,7 @@ namespace CGTeste
         {
             int id = 1;
             string descricaoCategoria = string.Empty;
-            Assert.Throws<ArgumentException>(() => new Categoria(id, descricaoCategoria));
+            Assert.Throws<ArgumentException>(() => new CategoriaRepository(id, descricaoCategoria));
         }
     }
 }
