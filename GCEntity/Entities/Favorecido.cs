@@ -5,7 +5,8 @@ namespace CGEntity.Entities
     public class Favorecido
     {
         public int Id { get; set; }
-        [MaxLength(100)] 
+        [MaxLength(50)] 
         public string Nome {  get; set; }
+        public ICollection<Lancamento> Lancamentos { get; set; }
     }
 }
