@@ -2,11 +2,10 @@
 
 namespace CGServer.Repository
 {
-    public class CategoriaRepository
+    public class CategoriaRepository:Categoria
     {
-        public int Id { get; }
         private string _descricao;
-        public string Descricao
+        public override string Descricao
         {
             get { return _descricao; }
             set
@@ -18,8 +17,6 @@ namespace CGServer.Repository
                 }
             }
         }
-        public ICollection<SubCategoria> Subcategorias { get; set; }
-        public ICollection<Lancamento> Lancamentos { get; set; }
         public CategoriaRepository(int id, string descricao)
         {
             if (id == 0) { id = Guid.NewGuid().GetHashCode(); }
