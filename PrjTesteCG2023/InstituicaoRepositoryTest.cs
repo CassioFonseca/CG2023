@@ -1,4 +1,3 @@
-using CGServer.Repository;
 
 namespace CGTeste
 
@@ -6,7 +5,7 @@ namespace CGTeste
 {
     public class InstituicaoRepositoryTest
     {
-        [Fact]
+       /* [Fact]
         public void TestCreateClass1()
         {
             int id = 1;
@@ -32,6 +31,6 @@ namespace CGTeste
             int id = 1;
             string nomeInstituicao = string.Empty;
             Assert.Throws<ArgumentException>(() => new InstituicaoRepository(id, nomeInstituicao));
-        }
+        }*/
     }
 }

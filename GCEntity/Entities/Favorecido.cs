@@ -2,21 +2,23 @@
 
 namespace CGEntity.Entities
 {
-    public class Favorecido:DbSetFavorecido
+    public class Favorecido
     {
-        private string _nome;
-        public override string Nome
+        public DbSetFavorecido DbSetFavorecido { get; }
+        public int Id { get { return this.DbSetFavorecido.Id; } }
+        public string Nome
         {
-            get { return _nome; }
+            get { return this.DbSetFavorecido.Nome; }
             set
             {
-                if (value != _nome)
+                if (value != this.DbSetFavorecido.Nome)
                 {
                     ValidaNome(value);
-                    this._nome = value;
+                    this.DbSetFavorecido.Nome = value;
                 }
             }
         }
+        public ICollection<Lancamento>? Lancamentos { get; set; }
         private void ValidaNome(string value)
         {
             if (string.IsNullOrEmpty(value))
@@ -24,13 +26,18 @@ namespace CGEntity.Entities
                 throw new ArgumentException("O nome do favorecido não pode ser vazio ou nulo.");
             }
         }
-        public Favorecido(int id, string nome)
+        public Favorecido(string nome)
         {
-            if (id == 0) { id = Guid.NewGuid().GetHashCode(); }
-            this.Id = id;
+            DbSetFavorecido = new DbSetFavorecido();
             ValidaNome(nome);
-            this._nome = nome;
-            this.Nome = nome;
+            DbSetFavorecido.Nome = nome;           
+            this.Lancamentos = new List<Lancamento>();
+        }
+
+        public Favorecido(DbSetFavorecido dbSetFavorecido)
+        {
+            ValidaNome(dbSetFavorecido.Nome);
+            DbSetFavorecido = dbSetFavorecido;
             this.Lancamentos = new List<Lancamento>();
         }
     }

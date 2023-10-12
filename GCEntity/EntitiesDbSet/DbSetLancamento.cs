@@ -9,7 +9,7 @@ namespace CGEntity.EntitiesDbSet
         public int Id { get; set; }
         public DateTime Data { get; set; }
         [MaxLength(100)]
-        public virtual string Descricao { get; set; } = string.Empty;
+        public string Descricao { get; set; } = string.Empty;
         [DataType(DataType.Currency)] 
         public double Valor { get; set; }
         public bool Recorrente { get; set; }

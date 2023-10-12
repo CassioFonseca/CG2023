@@ -4,6 +4,7 @@ using CGServer.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CGServer.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231007165937_AdicionandoTesteX")]
+    partial class AdicionandoTesteX
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -203,9 +206,6 @@ namespace CGServer.Migrations
                     b.Property<int?>("DbSetCategoriaId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("DbSetTesteXId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Descricao")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -215,26 +215,7 @@ namespace CGServer.Migrations
 
                     b.HasIndex("DbSetCategoriaId");
 
-                    b.HasIndex("DbSetTesteXId");
-
                     b.ToTable("SubCategorias");
-                });
-
-            modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetTesteX", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Descricao")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TesteX");
                 });
 
             modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetLancamento", b =>
@@ -273,10 +254,6 @@ namespace CGServer.Migrations
                     b.HasOne("CGEntity.EntitiesDbSet.DbSetCategoria", null)
                         .WithMany("Subcategorias")
                         .HasForeignKey("DbSetCategoriaId");
-
-                    b.HasOne("CGEntity.EntitiesDbSet.DbSetTesteX", null)
-                        .WithMany("Subcategoriasx")
-                        .HasForeignKey("DbSetTesteXId");
                 });
 
             modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetCategoria", b =>
@@ -314,11 +291,6 @@ namespace CGServer.Migrations
             modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetSubCategoria", b =>
                 {
                     b.Navigation("Lancamentos");
-                });
-
-            modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetTesteX", b =>
-                {
-                    b.Navigation("Subcategoriasx");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,38 +1,32 @@
 ﻿using CGEntity.Entities;
+using CGEntity.EntitiesDbSet;
+using CGServer.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace CGServer.Repository
 {
-    public class CategoriaRepository:Categoria
+    public class CategoriaRepository
     {
-        private string _descricao;
-        public override string Descricao
-        {
-            get { return _descricao; }
-            set
-            {
-                if (value != _descricao)
-                {
-                    ValidaDescricao(value);
-                    this._descricao = value;
-                }
-            }
+        private DbSetCategoria DbSetCategoria { get; set; }
+        private DbContext DbContext { get; set; }
+        public CategoriaRepository(Categoria categoria) 
+        { 
+            this.DbSetCategoria = categoria.DbSetCategoria;
+            this.DbContext = new AppDbContext();
         }
-        public CategoriaRepository(int id, string descricao)
+
+        public int AdicionarCategoria()
         {
-            if (id == 0) { id = Guid.NewGuid().GetHashCode(); }
-            this.Id = id;
-            ValidaDescricao(descricao);
-            this._descricao = descricao;
-            this.Descricao = descricao;
-            this.Subcategorias = new List<SubCategoria>();
-            this.Lancamentos = new List<Lancamento>();
+            var categoria = DbContext.Set<DbSetCategoria>();
+            this.DbSetCategoria.Id = 0;
+            categoria.Add(this.DbSetCategoria);
+            SalvarCategoria();
+            return this.DbSetCategoria.Id;
         }
-        private void ValidaDescricao(string value)
+
+        public void SalvarCategoria()
         {
-            if (string.IsNullOrEmpty(value))
-            {
-                throw new ArgumentException("O nome do favorecido não pode ser vazio ou nulo.");
-            }
+            this.DbContext.SaveChanges();
         }
     }
 }

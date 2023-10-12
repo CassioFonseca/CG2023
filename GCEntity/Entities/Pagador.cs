@@ -2,30 +2,30 @@
 
 namespace CGEntity.Entities
 {
-    public class Pagador:DbSetPagador
+    public class Pagador
     {
-        public int Id { get; }
-        private string _nome;
-        public string Nome
+        public DbSetPagador DbSetPagador { get; }
+        public int Id { get { return this.DbSetPagador.Id; } }
+        public string Descricao
         {
-            get { return _nome; }
+            get { return this.DbSetPagador.Nome; }
             set
             {
-                if (value != _nome)
+                if (value != this.DbSetPagador.Nome)
                 {
                     ValidaNome(value);
-                    this._nome = value;
+                    this.DbSetPagador.Nome = value;
                 }
             }
         }
-        public ICollection<Lancamento> Lancamentos { get; set; }
+        public ICollection<Lancamento>? Lancamentos { get; set; }
         public Pagador(int id, string nome)
         {
             if (id == 0) { id = Guid.NewGuid().GetHashCode(); }
-            this.Id = id;
+            DbSetPagador = new DbSetPagador();
+            DbSetPagador.Id = id;
             ValidaNome(nome);
-            this._nome = nome;
-            this.Nome = nome;
+            DbSetPagador.Nome = nome;
             this.Lancamentos = new List<Lancamento>();
         }
         private void ValidaNome(string value)

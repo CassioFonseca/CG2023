@@ -1,39 +1,32 @@
 ﻿using CGEntity.Entities;
+using CGEntity.EntitiesDbSet;
+using CGServer.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace CGServer.Repository
 {
     public class PagadorRepository
     {
-        public int Id { get; }
-        private string _nome;
-        public string Nome
+        private DbSetPagador DbSetPagador { get; set; }
+        private DbContext DbContext { get; set; }
+        public PagadorRepository(Pagador pagador)
         {
-            get { return _nome; }
-            set
-            {
-                if (value != _nome)
-                {
-                    ValidaNome(value);
-                    this._nome = value;
-                }
-            }
+            this.DbSetPagador = pagador.DbSetPagador;
+            this.DbContext = new AppDbContext();
         }
-        public ICollection<Lancamento> Lancamentos { get; set; }
-        public PagadorRepository(int id, string nome)
+
+        public int AdicionarFavorecido()
         {
-            if (id == 0) { id = Guid.NewGuid().GetHashCode(); }
-            this.Id = id;
-            ValidaNome(nome);
-            this._nome = nome;
-            this.Nome = nome;
-            this.Lancamentos = new List<Lancamento>();
+            var pagador = DbContext.Set<DbSetPagador>();
+            this.DbSetPagador.Id = 0;
+            pagador.Add(this.DbSetPagador);
+            SalvarCategoria();
+            return this.DbSetPagador.Id;
         }
-        private void ValidaNome(string value)
+
+        public void SalvarCategoria()
         {
-            if (string.IsNullOrEmpty(value))
-            {
-                throw new ArgumentException("O nome do pagador não pode ser vazio ou nulo.");
-            }
+            this.DbContext.SaveChanges();
         }
     }
 }

@@ -7,6 +7,6 @@ namespace CGEntity.EntitiesDbSet
         public int Id { get; set; }
         [MaxLength(50)]
         public virtual string Nome { get; set; } = string.Empty;
-        public ICollection<DbSetLancamento> Lancamentos { get; set; }
+        public virtual ICollection<DbSetLancamento>? Lancamentos { get; set; }
     }
 }

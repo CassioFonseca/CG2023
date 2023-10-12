@@ -1,5 +1,4 @@
 using CGEntity.Entities;
-using CGServer.Repository;
 
 namespace CGTeste
 
@@ -7,7 +6,7 @@ namespace CGTeste
 {
     public class ModalidadeRepositoryTest
     {
-        [Fact]
+        /*[Fact]
         public void TestCreateClass1()
         {
             int id = 1;
@@ -33,6 +32,6 @@ namespace CGTeste
             int id = 1;
             string descricaoModalidade = string.Empty;
             Assert.Throws<ArgumentException>(() => new ModalidadeRepository(id, descricaoModalidade));
-        }
+        }*/
     }
 }

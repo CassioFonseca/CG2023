@@ -2,29 +2,30 @@
 
 namespace CGEntity.Entities
 {
-    public class Fornecedor:DbSetFornecedor
+    public class Fornecedor
     {
-        private string _nome;
-        public override string Nome
+        public DbSetFornecedor dbSetFornecedor { get; }
+        public int Id { get { return this.dbSetFornecedor.Id; } }
+        public string Nome
         {
-            get { return _nome; }
+            get { return this.dbSetFornecedor.Nome; }
             set
             {
-                if (value != _nome)
+                if (value != this.dbSetFornecedor.Nome)
                 {
                     ValidaNome(value);
-                    this._nome = value;
+                    this.dbSetFornecedor.Nome = value;
                 }
             }
         }
-        public override ICollection<Lancamento>? Lancamentos { get; set; }
+        public ICollection<Lancamento>? Lancamentos { get; set; }
         public Fornecedor(int id, string nome)
         {
             if (id == 0) { id = Guid.NewGuid().GetHashCode(); }
-            this.Id = id;
+            dbSetFornecedor = new DbSetFornecedor();
+            dbSetFornecedor.Id = id;
             ValidaNome(nome);
-            this._nome = nome;
-            this.Nome = nome;
+            dbSetFornecedor.Nome = nome;
             this.Lancamentos = new List<Lancamento>();
         }
         private void ValidaNome(string value)

@@ -2,33 +2,33 @@
 
 namespace CGEntity.Entities
 {
-    public class Modalidade:DbSetModalidade
+    public class Modalidade
     {
-        public int Id { get; }
-        private string _descricao;
+        public DbSetModalidade DbSetModalidade { get; }
+        public int Id { get { return this.DbSetModalidade.Id; } }
         public string Descricao
         {
-            get { return _descricao; }
+            get { return this.DbSetModalidade.Descricao; }
             set
             {
-                if (value != _descricao)
+                if (value != this.DbSetModalidade.Descricao)
                 {
-                    ValidaDescricao(value);
-                    this._descricao = value;
+                    ValidaNome(value);
+                    this.DbSetModalidade.Descricao = value;
                 }
             }
         }
-        public ICollection<Lancamento> Lancamentos { get; set; }
+        public ICollection<Lancamento>? Lancamentos { get; set; }
         public Modalidade(int id, string descricao)
         {
             if (id == 0) { id = Guid.NewGuid().GetHashCode(); }
-            this.Id = id;
-            ValidaDescricao(descricao);
-            this._descricao = descricao;
-            this.Descricao = descricao;
+            DbSetModalidade = new DbSetModalidade();
+            DbSetModalidade.Id = id;
+            ValidaNome(descricao);
+            DbSetModalidade.Descricao = descricao;
             this.Lancamentos = new List<Lancamento>();
         }
-        private void ValidaDescricao(string value)
+        private void ValidaNome(string value)
         {
             if (string.IsNullOrEmpty(value))
             {

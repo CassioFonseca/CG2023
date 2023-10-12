@@ -1,47 +1,32 @@
 ﻿using CGEntity.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using CGEntity.EntitiesDbSet;
+using CGServer.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace CGServer.Repository
 {
     public class SubCategoriaRepository
     {
-        public int Id { get; }
-        private string _descricao;
-        public string Descricao
+        private DbSetSubCategoria DbSetSubCategoria { get; set; }
+        private DbContext DbContext { get; set; }
+        public SubCategoriaRepository(SubCategoria subCategoria)
         {
-            get { return _descricao; }
-            set
-            {
-                if (value != _descricao)
-                {
-                    ValidaDescricao(value);
-                    this._descricao = value;
-                }
-            }
+            this.DbSetSubCategoria = subCategoria.DbSetSubCategoria;
+            this.DbContext = new AppDbContext();
         }
-        public int? CategoriaDespesaID { get; set; }
-        public ICollection<Lancamento> Lancamentos { get; set; }
-        public SubCategoriaRepository(int id, string descricao, int categoriaDespesaId)
+
+        public int AdicionarFavorecido()
         {
-            if (id == 0) { id = Guid.NewGuid().GetHashCode(); }
-            this.Id = id;
-            ValidaDescricao(descricao);
-            this._descricao = descricao;
-            this.Descricao = descricao;
-            if (categoriaDespesaId > 0) { this.CategoriaDespesaID = categoriaDespesaId; }
-            else { this.CategoriaDespesaID = null; }
-            this.Lancamentos = new List<Lancamento>();
+            var subCategoria = DbContext.Set<DbSetSubCategoria>();
+            this.DbSetSubCategoria.Id = 0;
+            subCategoria.Add(this.DbSetSubCategoria);
+            SalvarCategoria();
+            return this.DbSetSubCategoria.Id;
         }
-        private void ValidaDescricao(string value)
+
+        public void SalvarCategoria()
         {
-            if (string.IsNullOrEmpty(value))
-            {
-                throw new ArgumentException("O nome do favorecido não pode ser vazio ou nulo.");
-            }
+            this.DbContext.SaveChanges();
         }
     }
 }

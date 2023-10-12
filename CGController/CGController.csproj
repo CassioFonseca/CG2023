@@ -7,8 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CGServer\CGServer.csproj" />
-    <ProjectReference Include="..\GCEntity\CGEntity.csproj" />
+    <ProjectReference Include="..\CGDomain\CGDomain.csproj" />
   </ItemGroup>
 
 </Project>

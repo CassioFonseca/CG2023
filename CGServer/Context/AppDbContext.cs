@@ -1,4 +1,4 @@
-﻿using CGEntity.Entities;
+﻿using CGEntity.EntitiesDbSet;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -6,15 +6,15 @@ namespace CGServer.Context
 {
     public class AppDbContext : DbContext
     {
-        public DbSet<Categoria> Categorias { get; set; }
-        public DbSet<Favorecido> Favorecidos { get; set; }
-        public DbSet<Fornecedor> Fornecedores { get; set; }
-        public DbSet<Instituicao> Instituicoes { get; set; }
-        public DbSet<Lancamento> Lancamentos { get; set; }
-        public DbSet<Modalidade> Modalidades { get; set; }
-        public DbSet<Pagador> Pagadores { get; set; }
-        public DbSet<SubCategoria> SubCategorias { get; set; }
-
+        public DbSet<DbSetCategoria> Categorias { get; set; }
+        public DbSet<DbSetFavorecido> Favorecidos { get; set; }
+        public DbSet<DbSetFornecedor> Fornecedores { get; set; }
+        public DbSet<DbSetInstituicao> Instituicoes { get; set; }
+        public DbSet<DbSetLancamento> Lancamentos { get; set; }
+        public DbSet<DbSetModalidade> Modalidades { get; set; }
+        public DbSet<DbSetPagador> Pagadores { get; set; }
+        public DbSet<DbSetSubCategoria> SubCategorias { get; set; }
+        public DbSet<DbSetTesteX> TesteX { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

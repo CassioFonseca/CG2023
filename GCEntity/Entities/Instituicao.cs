@@ -2,38 +2,39 @@
 
 namespace CGEntity.Entities
 {
-    public class Instituicao:DbSetInstituicao
+    public class Instituicao
     {
-        public int Id { get; }
-        private string _nome;
+        public DbSetInstituicao dbSetInstituicao { get; }
+        public int Id { get { return this.dbSetInstituicao.Id; } }
         public string Nome
         {
-            get { return _nome; }
+            get { return this.dbSetInstituicao.Nome; }
             set
             {
-                if (value != _nome)
+                if (value != this.dbSetInstituicao.Nome)
                 {
                     ValidaNome(value);
-                    this._nome = value;
+                    this.dbSetInstituicao.Nome = value;
                 }
             }
         }
-        public ICollection<Lancamento> Lancamentos { get; set; }
+        public ICollection<Lancamento>? Lancamentos { get; set; }
         public Instituicao(int id, string nome)
         {
             if (id == 0) { id = Guid.NewGuid().GetHashCode(); }
-            this.Id = id;
+            dbSetInstituicao = new DbSetInstituicao();
+            dbSetInstituicao.Id = id;
             ValidaNome(nome);
-            this._nome = nome;
-            this.Nome = nome;
+            dbSetInstituicao.Nome = nome;
             this.Lancamentos = new List<Lancamento>();
         }
         private void ValidaNome(string value)
         {
             if (string.IsNullOrEmpty(value))
             {
-                throw new ArgumentException("O nome da instituição não pode ser vazio ou nulo.");
+                throw new ArgumentException("O nome da instituicão não pode ser vazio ou nulo.");
             }
         }
+
     }
 }

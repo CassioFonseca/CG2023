@@ -1,39 +1,32 @@
 ﻿using CGEntity.Entities;
+using CGEntity.EntitiesDbSet;
+using CGServer.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace CGServer.Repository
 {
     public class ModalidadeRepository
     {
-        public int Id { get; }
-        private string _descricao;
-        public string Descricao
+        private DbSetModalidade DbSetModalidade { get; set; }
+        private DbContext DbContext { get; set; }
+        public ModalidadeRepository(Modalidade modalidade)
         {
-            get { return _descricao; }
-            set
-            {
-                if (value != _descricao)
-                {
-                    ValidaDescricao(value);
-                    this._descricao = value;
-                }
-            }
+            this.DbSetModalidade = modalidade.DbSetModalidade;
+            this.DbContext = new AppDbContext();
         }
-        public ICollection<Lancamento> Lancamentos { get; set; }
-        public ModalidadeRepository(int id, string descricao)
+
+        public int AdicionarFavorecido()
         {
-            if (id == 0) { id = Guid.NewGuid().GetHashCode(); }
-            this.Id = id;
-            ValidaDescricao(descricao);
-            this._descricao = descricao;
-            this.Descricao = descricao;
-            this.Lancamentos = new List<Lancamento>();
+            var modalidade = DbContext.Set<DbSetModalidade>();
+            this.DbSetModalidade.Id = 0;
+            modalidade.Add(this.DbSetModalidade);
+            SalvarCategoria();
+            return this.DbSetModalidade.Id;
         }
-        private void ValidaDescricao(string value)
+
+        public void SalvarCategoria()
         {
-            if (string.IsNullOrEmpty(value))
-            {
-                throw new ArgumentException("O nome da modalidade não pode ser vazio ou nulo.");
-            }
+            this.DbContext.SaveChanges();
         }
     }
 }

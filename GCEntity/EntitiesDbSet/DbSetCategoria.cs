@@ -6,7 +6,7 @@ namespace CGEntity.EntitiesDbSet
     {
         public int Id { get; set; }
         [MaxLength(50)]
-        public virtual string Descricao { get; set; } = string.Empty;
+        public string Descricao { get; set; } = string.Empty;
         public ICollection<DbSetSubCategoria>? Subcategorias { get; set; }
         public ICollection<DbSetLancamento>? Lancamentos { get; set; }
     }

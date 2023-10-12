@@ -2,40 +2,40 @@
 
 namespace CGEntity.Entities
 {
-    public class SubCategoria:DbSetCategoria
+    public class SubCategoria
     {
-        public int Id { get; }
-        private string _descricao;
+        public DbSetSubCategoria DbSetSubCategoria { get; }
+        public ICollection<Lancamento>? Lancamentos { get; set; }
+        public int? CategoriaId { get; set; }
+        public int Id { get { return this.DbSetSubCategoria.Id; } }
         public string Descricao
         {
-            get { return _descricao; }
+            get { return this.DbSetSubCategoria.Descricao; }
             set
             {
-                if (value != _descricao)
+                if (value != this.DbSetSubCategoria.Descricao)
                 {
                     ValidaDescricao(value);
-                    this._descricao = value;
+                    this.DbSetSubCategoria.Descricao = value;
                 }
             }
         }
-        public int? CategoriaDespesaID { get; set; }
-        public ICollection<Lancamento> Lancamentos { get; set; }
-        public SubCategoria(int id, string descricao, int categoriaDespesaId)
+        public SubCategoria(int id, int idCategoria, string descricao)
         {
             if (id == 0) { id = Guid.NewGuid().GetHashCode(); }
-            this.Id = id;
+            DbSetSubCategoria = new DbSetSubCategoria();
+            DbSetSubCategoria.Id = id;
             ValidaDescricao(descricao);
-            this._descricao = descricao;
-            this.Descricao = descricao;
-            if (categoriaDespesaId > 0) { this.CategoriaDespesaID = categoriaDespesaId; }
-            else { this.CategoriaDespesaID = null; }
+            DbSetSubCategoria.Descricao = descricao;
+            if (idCategoria > 0) { this.CategoriaId = idCategoria; }
+            else { this.CategoriaId = null; }
             this.Lancamentos = new List<Lancamento>();
         }
         private void ValidaDescricao(string value)
         {
             if (string.IsNullOrEmpty(value))
             {
-                throw new ArgumentException("O nome do favorecido não pode ser vazio ou nulo.");
+                throw new ArgumentException("O nome da sub categoria não pode ser vazio ou nulo.");
             }
         }
     }

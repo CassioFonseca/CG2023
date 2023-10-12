@@ -1,39 +1,32 @@
 ﻿using CGEntity.Entities;
+using CGEntity.EntitiesDbSet;
+using CGServer.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace CGServer.Repository
 {
     public class FornecedorRepository
     {
-        public int Id { get; }
-        private string _nome;
-        public string Nome
+        private DbSetFornecedor DbSetFornecedor { get; set; }
+        private DbContext DbContext { get; set; }
+        public FornecedorRepository(Fornecedor fornecedor)
         {
-            get { return _nome; }
-            set
-            {
-                if (value != _nome)
-                {
-                    ValidaNome(value);
-                    this._nome = value;
-                }
-            }
+            this.DbSetFornecedor = fornecedor.dbSetFornecedor;
+            this.DbContext = new AppDbContext();
         }
-        public ICollection<Lancamento> Lancamentos { get; set; }
-        public FornecedorRepository(int id, string nome)
+
+        public int AdicionarFavorecido()
         {
-            if (id == 0) { id = Guid.NewGuid().GetHashCode(); }
-            this.Id = id;
-            ValidaNome(nome);
-            this._nome = nome;
-            this.Nome = nome;
-            this.Lancamentos = new List<Lancamento>();
+            var favorecido = DbContext.Set<DbSetFornecedor>();
+            this.DbSetFornecedor.Id = 0;
+            favorecido.Add(this.DbSetFornecedor);
+            SalvarCategoria();
+            return this.DbSetFornecedor.Id;
         }
-        private void ValidaNome(string value)
+
+        public void SalvarCategoria()
         {
-            if (string.IsNullOrEmpty(value))
-            {
-                throw new ArgumentException("O nome do fornecedor não pode ser vazio ou nulo.");
-            }
+            this.DbContext.SaveChanges();
         }
     }
 }

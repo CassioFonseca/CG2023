@@ -1,39 +1,32 @@
 ﻿using CGEntity.Entities;
+using CGEntity.EntitiesDbSet;
+using CGServer.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace CGServer.Repository
 {
     public class InstituicaoRepository
     {
-        public int Id { get; }
-        private string _nome;
-        public string Nome
+        private DbSetInstituicao DbSetInstituicao { get; set; }
+        private DbContext DbContext { get; set; }
+        public InstituicaoRepository(Instituicao instituicao)
         {
-            get { return _nome; }
-            set
-            {
-                if (value != _nome)
-                {
-                    ValidaNome(value);
-                    this._nome = value;
-                }
-            }
+            this.DbSetInstituicao = instituicao.dbSetInstituicao;
+            this.DbContext = new AppDbContext();
         }
-        public ICollection<Lancamento> Lancamentos { get; set; }
-        public InstituicaoRepository(int id, string nome)
+
+        public int AdicionarFavorecido()
         {
-            if (id == 0) { id = Guid.NewGuid().GetHashCode(); }
-            this.Id = id;
-            ValidaNome(nome);
-            this._nome = nome;
-            this.Nome = nome;
-            this.Lancamentos = new List<Lancamento>();
+            var favorecido = DbContext.Set<DbSetInstituicao>();
+            this.DbSetInstituicao.Id = 0;
+            favorecido.Add(this.DbSetInstituicao);
+            SalvarCategoria();
+            return this.DbSetInstituicao.Id;
         }
-        private void ValidaNome(string value)
+
+        public void SalvarCategoria()
         {
-            if (string.IsNullOrEmpty(value))
-            {
-                throw new ArgumentException("O nome da instituição não pode ser vazio ou nulo.");
-            }
+            this.DbContext.SaveChanges();
         }
     }
 }

@@ -2,10 +2,47 @@
 
 namespace CGEntity.Entities
 {
-    public class Lancamento:DbSetLancamento
+    public class Lancamento
     {
-        public int Id { get; }
-        public DateOnly Data { get; set; }
+        public DbSetLancamento DbSetLancamento { get; }
+        public int Id { get { return this.DbSetLancamento.Id; } }
+        public DateTime DataLancamento
+        {
+            get { return this.DbSetLancamento.Data; }
+            set
+            {
+                if (value != this.DbSetLancamento.Data) { this.DbSetLancamento.Data = value; }
+            }
+        }
+        public string Descricao
+        {
+            get { return this.DbSetLancamento.Descricao; }
+            set
+            {
+                if (value != this.DbSetLancamento.Descricao)
+                {
+                    this.DbSetLancamento.Descricao = value;
+                }
+            }
+        }
+        public double Valor 
+        { get { return this.DbSetLancamento.Valor; }
+            set
+            {
+                if (value != this.DbSetLancamento.Valor)
+                { 
+                    this.DbSetLancamento.Valor = value; 
+                }
+            }
+        }
+        public bool Recorrente
+        {
+            get { return this.DbSetLancamento.Recorrente; }
+            set
+            {
+                if (value = !this.DbSetLancamento.Recorrente) { this.DbSetLancamento.Recorrente = value; }
+            }
+        }
         int _idFavorecido;
         public int IdFavorecido
         {
@@ -49,16 +86,14 @@ namespace CGEntity.Entities
         public int IdCategoria { get; set; }
         public int IdSubCategoria { get; set; }
         public int IdFornecedor { get; set; }
-        public string Descricao { get; set; }
-        public double Valor { get; set; }
-        public bool Recorrente { get; set; }
 
-        public Lancamento(int id, DateOnly data, int idFavorecido, int idPagador, int idModalidade, int idInstituicao, int idCategoria,
+        public Lancamento(int id, DateTime data, int idFavorecido, int idPagador, int idModalidade, int idInstituicao, int idCategoria,
             int idSubCategoria, int idFornecedor, string descricao, double valor, bool recorrente)
         {
             if (id == 0) { id = Guid.NewGuid().GetHashCode(); }
-            Id = id;
-            Data = data;
+            DbSetLancamento = new DbSetLancamento();
+            DbSetLancamento.Id = id;
+            DbSetLancamento.Data = data;
             IdFavorecido = idFavorecido;
             IdPagador = idPagador;
             IdModalidade = idModalidade;
