@@ -4,7 +4,7 @@ namespace CGEntity.Entities
 {
     public class Pagador
     {
-        public DbSetPagador DbSetPagador { get; }
+        public DbSetPagador DbSetPagador { get; } = new DbSetPagador();
         public int Id { get { return this.DbSetPagador.Id; } }
         public string Descricao
         {
@@ -18,15 +18,17 @@ namespace CGEntity.Entities
                 }
             }
         }
-        public ICollection<Lancamento>? Lancamentos { get; set; }
-        public Pagador(int id, string nome)
+        public ICollection<Lancamento>? Lancamentos { get; set; } = new List<Lancamento>();
+        public Pagador(string nome)
         {
-            if (id == 0) { id = Guid.NewGuid().GetHashCode(); }
             DbSetPagador = new DbSetPagador();
-            DbSetPagador.Id = id;
             ValidaNome(nome);
             DbSetPagador.Nome = nome;
-            this.Lancamentos = new List<Lancamento>();
+        }
+        public Pagador(DbSetPagador dbSetPagador)
+        {
+            ValidaNome(dbSetPagador.Nome);
+            DbSetPagador = dbSetPagador;
         }
         private void ValidaNome(string value)
         {

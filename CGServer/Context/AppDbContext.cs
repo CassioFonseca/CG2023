@@ -14,10 +14,18 @@ namespace CGServer.Context
         public DbSet<DbSetModalidade> Modalidades { get; set; }
         public DbSet<DbSetPagador> Pagadores { get; set; }
         public DbSet<DbSetSubCategoria> SubCategorias { get; set; }
-        public DbSet<DbSetTesteX> TesteX { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<DbSetSubCategoria>().HasOne(sc => sc.Categoria).WithMany(c => c.SubCategorias).HasForeignKey(sc => sc.CategoriaId);
+            modelBuilder.Entity<DbSetLancamento>().HasOne(l => l.Categoria).WithMany(c => c.Lancamentos).HasForeignKey(l => l.CategoriaId);
+            modelBuilder.Entity<DbSetLancamento>().HasOne(l => l.Favorecido).WithMany(f => f.Lancamentos).HasForeignKey(l => l.FavorecidoId);
+            modelBuilder.Entity<DbSetLancamento>().HasOne(l => l.Fornecedor).WithMany(f => f.Lancamentos).HasForeignKey(l => l.FornecedorId);
+            modelBuilder.Entity<DbSetLancamento>().HasOne(l => l.Instituicao).WithMany(i => i.Lancamentos).HasForeignKey(l => l.InstituicaoId);
+            modelBuilder.Entity<DbSetLancamento>().HasOne(l => l.Modalidade).WithMany(m => m.Lancamentos).HasForeignKey(l => l.ModalidadeId);
+            modelBuilder.Entity<DbSetLancamento>().HasOne(l => l.Pagador).WithMany(p => p.Lancamentos).HasForeignKey(l => l.PagadorId);
+            modelBuilder.Entity<DbSetLancamento>().HasOne(l => l.SubCategoria).WithMany(s => s.Lancamentos).HasForeignKey(l => l.SubCategoriaId);
 
         }
 

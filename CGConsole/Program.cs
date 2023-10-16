@@ -20,16 +20,15 @@ namespace CGConsole
         private static void AdicionarCategoria()
         {
 
-            Categoria categoria = CriaCategoria(0, "Teste Categoria Adicionando");
-            CategoriaRepository categoriaRepository = new CategoriaRepository(categoria);
-            categoriaRepository.AdicionarCategoria();
+            CategoriaController categoriaController = new CategoriaController();
+            int idNewCategoria = categoriaController.Adicionar(String.Format("Teste Adiciona Categoria {0}", Guid.NewGuid().ToString().Substring(0, 5)));
+            Console.WriteLine(string.Format("Id do nova categoria {0}", idNewCategoria));
         }
-
-        private static Categoria CriaCategoria(int id, string descricao)
+        private static void GetCategoria()
         {
             CategoriaController categoriaController = new CategoriaController();
-            return categoriaController.CriarCategoria(id, descricao);
-
+            Categoria categoria = categoriaController.GetId(5);
+            Console.WriteLine(string.Format("Nome nova categoria {0} - {1}", categoria.Id, categoria.Descricao));
         }
         private static void AdicionarFavorecido()
         {

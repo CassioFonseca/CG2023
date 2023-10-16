@@ -4,29 +4,31 @@ namespace CGEntity.Entities
 {
     public class Instituicao
     {
-        public DbSetInstituicao dbSetInstituicao { get; }
-        public int Id { get { return this.dbSetInstituicao.Id; } }
+        public DbSetInstituicao DbSetInstituicao { get; } = new DbSetInstituicao();
+        public int Id { get { return this.DbSetInstituicao.Id; } }
         public string Nome
         {
-            get { return this.dbSetInstituicao.Nome; }
+            get { return this.DbSetInstituicao.Nome; }
             set
             {
-                if (value != this.dbSetInstituicao.Nome)
+                if (value != this.DbSetInstituicao.Nome)
                 {
                     ValidaNome(value);
-                    this.dbSetInstituicao.Nome = value;
+                    this.DbSetInstituicao.Nome = value;
                 }
             }
         }
-        public ICollection<Lancamento>? Lancamentos { get; set; }
-        public Instituicao(int id, string nome)
+        public ICollection<Lancamento>? Lancamentos { get; set; } = new List<Lancamento>();
+        public Instituicao(string nome)
         {
-            if (id == 0) { id = Guid.NewGuid().GetHashCode(); }
-            dbSetInstituicao = new DbSetInstituicao();
-            dbSetInstituicao.Id = id;
+            DbSetInstituicao = new DbSetInstituicao();
             ValidaNome(nome);
-            dbSetInstituicao.Nome = nome;
-            this.Lancamentos = new List<Lancamento>();
+            DbSetInstituicao.Nome = nome;
+        }
+        public Instituicao(DbSetInstituicao dbSetInstituicao)
+        {
+            ValidaNome(dbSetInstituicao.Nome);
+            DbSetInstituicao = dbSetInstituicao;
         }
         private void ValidaNome(string value)
         {

@@ -12,14 +12,14 @@ namespace CGServer.Repository
     public class BaseRepository<T> where T : class
     {
         private readonly DbContext DbContext;
-        private readonly DbSet<T> DbSetRepository;
+        protected readonly DbSet<T> DbSetRepository;
         public BaseRepository()
         {
             this.DbContext = new AppDbContext();
             this.DbSetRepository = this.DbContext.Set<T>();
         }
 
-        public void Adicionar(T entidade)
+        public void AdicionarDbSet(T entidade)
         {
             this.DbSetRepository.Add(entidade);
         }
@@ -27,9 +27,14 @@ namespace CGServer.Repository
         {
             this.DbContext.SaveChanges();
         }
-        public T GetId(int id)
+        public T? DbSetGetId(int id)
         {
             return DbSetRepository.Find(id);
+        }
+        public T? DbSetGetFirst()
+        {
+            T? result = DbSetRepository.First();
+            return result;
         }
     }
 }

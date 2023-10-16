@@ -102,56 +102,56 @@ namespace CGServer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CategoriaId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Data")
                         .HasColumnType("datetime2");
-
-                    b.Property<int?>("DbSetCategoriaId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DbSetFavorecidoId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DbSetFornecedorId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DbSetInstituicaoId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DbSetModalidadeId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DbSetPagadorId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DbSetSubCategoriaId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Descricao")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<int>("FavorecidoId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("FornecedorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("InstituicaoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ModalidadeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PagadorId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("Recorrente")
                         .HasColumnType("bit");
+
+                    b.Property<int?>("SubCategoriaId")
+                        .HasColumnType("int");
 
                     b.Property<double>("Valor")
                         .HasColumnType("float");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DbSetCategoriaId");
+                    b.HasIndex("CategoriaId");
 
-                    b.HasIndex("DbSetFavorecidoId");
+                    b.HasIndex("FavorecidoId");
 
-                    b.HasIndex("DbSetFornecedorId");
+                    b.HasIndex("FornecedorId");
 
-                    b.HasIndex("DbSetInstituicaoId");
+                    b.HasIndex("InstituicaoId");
 
-                    b.HasIndex("DbSetModalidadeId");
+                    b.HasIndex("ModalidadeId");
 
-                    b.HasIndex("DbSetPagadorId");
+                    b.HasIndex("PagadorId");
 
-                    b.HasIndex("DbSetSubCategoriaId");
+                    b.HasIndex("SubCategoriaId");
 
                     b.ToTable("Lancamentos");
                 });
@@ -200,10 +200,7 @@ namespace CGServer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("DbSetCategoriaId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DbSetTesteXId")
+                    b.Property<int>("CategoriaId")
                         .HasColumnType("int");
 
                     b.Property<string>("Descricao")
@@ -213,77 +210,82 @@ namespace CGServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DbSetCategoriaId");
-
-                    b.HasIndex("DbSetTesteXId");
+                    b.HasIndex("CategoriaId");
 
                     b.ToTable("SubCategorias");
                 });
 
-            modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetTesteX", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Descricao")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TesteX");
-                });
-
             modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetLancamento", b =>
                 {
-                    b.HasOne("CGEntity.EntitiesDbSet.DbSetCategoria", null)
+                    b.HasOne("CGEntity.EntitiesDbSet.DbSetCategoria", "Categoria")
                         .WithMany("Lancamentos")
-                        .HasForeignKey("DbSetCategoriaId");
+                        .HasForeignKey("CategoriaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("CGEntity.EntitiesDbSet.DbSetFavorecido", null)
+                    b.HasOne("CGEntity.EntitiesDbSet.DbSetFavorecido", "Favorecido")
                         .WithMany("Lancamentos")
-                        .HasForeignKey("DbSetFavorecidoId");
+                        .HasForeignKey("FavorecidoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("CGEntity.EntitiesDbSet.DbSetFornecedor", null)
+                    b.HasOne("CGEntity.EntitiesDbSet.DbSetFornecedor", "Fornecedor")
                         .WithMany("Lancamentos")
-                        .HasForeignKey("DbSetFornecedorId");
+                        .HasForeignKey("FornecedorId");
 
-                    b.HasOne("CGEntity.EntitiesDbSet.DbSetInstituicao", null)
+                    b.HasOne("CGEntity.EntitiesDbSet.DbSetInstituicao", "Instituicao")
                         .WithMany("Lancamentos")
-                        .HasForeignKey("DbSetInstituicaoId");
+                        .HasForeignKey("InstituicaoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("CGEntity.EntitiesDbSet.DbSetModalidade", null)
+                    b.HasOne("CGEntity.EntitiesDbSet.DbSetModalidade", "Modalidade")
                         .WithMany("Lancamentos")
-                        .HasForeignKey("DbSetModalidadeId");
+                        .HasForeignKey("ModalidadeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("CGEntity.EntitiesDbSet.DbSetPagador", null)
+                    b.HasOne("CGEntity.EntitiesDbSet.DbSetPagador", "Pagador")
                         .WithMany("Lancamentos")
-                        .HasForeignKey("DbSetPagadorId");
+                        .HasForeignKey("PagadorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("CGEntity.EntitiesDbSet.DbSetSubCategoria", null)
+                    b.HasOne("CGEntity.EntitiesDbSet.DbSetSubCategoria", "SubCategoria")
                         .WithMany("Lancamentos")
-                        .HasForeignKey("DbSetSubCategoriaId");
+                        .HasForeignKey("SubCategoriaId");
+
+                    b.Navigation("Categoria");
+
+                    b.Navigation("Favorecido");
+
+                    b.Navigation("Fornecedor");
+
+                    b.Navigation("Instituicao");
+
+                    b.Navigation("Modalidade");
+
+                    b.Navigation("Pagador");
+
+                    b.Navigation("SubCategoria");
                 });
 
             modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetSubCategoria", b =>
                 {
-                    b.HasOne("CGEntity.EntitiesDbSet.DbSetCategoria", null)
-                        .WithMany("Subcategorias")
-                        .HasForeignKey("DbSetCategoriaId");
+                    b.HasOne("CGEntity.EntitiesDbSet.DbSetCategoria", "Categoria")
+                        .WithMany("SubCategorias")
+                        .HasForeignKey("CategoriaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("CGEntity.EntitiesDbSet.DbSetTesteX", null)
-                        .WithMany("Subcategoriasx")
-                        .HasForeignKey("DbSetTesteXId");
+                    b.Navigation("Categoria");
                 });
 
             modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetCategoria", b =>
                 {
                     b.Navigation("Lancamentos");
 
-                    b.Navigation("Subcategorias");
+                    b.Navigation("SubCategorias");
                 });
 
             modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetFavorecido", b =>
@@ -314,11 +316,6 @@ namespace CGServer.Migrations
             modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetSubCategoria", b =>
                 {
                     b.Navigation("Lancamentos");
-                });
-
-            modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetTesteX", b =>
-                {
-                    b.Navigation("Subcategoriasx");
                 });
 #pragma warning restore 612, 618
         }

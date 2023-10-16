@@ -4,9 +4,9 @@ namespace CGEntity.Entities
 {
     public class Modalidade
     {
-        public DbSetModalidade DbSetModalidade { get; }
+        public DbSetModalidade DbSetModalidade { get; } = new DbSetModalidade();
         public int Id { get { return this.DbSetModalidade.Id; } }
-        public string Descricao
+        public string Nome
         {
             get { return this.DbSetModalidade.Descricao; }
             set
@@ -18,21 +18,23 @@ namespace CGEntity.Entities
                 }
             }
         }
-        public ICollection<Lancamento>? Lancamentos { get; set; }
-        public Modalidade(int id, string descricao)
+        public ICollection<Lancamento>? Lancamentos { get; set; } = new List<Lancamento>();
+        public Modalidade(string descricao)
         {
-            if (id == 0) { id = Guid.NewGuid().GetHashCode(); }
             DbSetModalidade = new DbSetModalidade();
-            DbSetModalidade.Id = id;
             ValidaNome(descricao);
             DbSetModalidade.Descricao = descricao;
-            this.Lancamentos = new List<Lancamento>();
+        }
+        public Modalidade(DbSetModalidade dbSetModalidade)
+        {
+            ValidaNome(dbSetModalidade.Descricao);
+            DbSetModalidade = dbSetModalidade;
         }
         private void ValidaNome(string value)
         {
             if (string.IsNullOrEmpty(value))
             {
-                throw new ArgumentException("O nome da modalidade não pode ser vazio ou nulo.");
+                throw new ArgumentException("O nome da instituicão não pode ser vazio ou nulo.");
             }
         }
     }

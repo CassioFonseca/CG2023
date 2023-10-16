@@ -1,32 +1,13 @@
-﻿using CGEntity.Entities;
-using CGEntity.EntitiesDbSet;
-using CGServer.Context;
-using Microsoft.EntityFrameworkCore;
+﻿using CGEntity.EntitiesDbSet;
 
 namespace CGServer.Repository
 {
-    public class SubCategoriaRepository
+    public class SubCategoriaRepository : BaseRepository<DbSetSubCategoria>
     {
-        private DbSetSubCategoria DbSetSubCategoria { get; set; }
-        private DbContext DbContext { get; set; }
-        public SubCategoriaRepository(SubCategoria subCategoria)
+        public DbSetSubCategoria DbSetGetFirst(int idCategoria)
         {
-            this.DbSetSubCategoria = subCategoria.DbSetSubCategoria;
-            this.DbContext = new AppDbContext();
-        }
-
-        public int AdicionarFavorecido()
-        {
-            var subCategoria = DbContext.Set<DbSetSubCategoria>();
-            this.DbSetSubCategoria.Id = 0;
-            subCategoria.Add(this.DbSetSubCategoria);
-            SalvarCategoria();
-            return this.DbSetSubCategoria.Id;
-        }
-
-        public void SalvarCategoria()
-        {
-            this.DbContext.SaveChanges();
+            DbSetSubCategoria result = DbSetRepository.First(p => p.CategoriaId == idCategoria);
+            return result;
         }
     }
 }

@@ -4,7 +4,7 @@ namespace CGEntity.Entities
 {
     public class Lancamento
     {
-        public DbSetLancamento DbSetLancamento { get; }
+        public DbSetLancamento DbSetLancamento { get; } = new DbSetLancamento();
         public int Id { get { return this.DbSetLancamento.Id; } }
         public DateTime DataLancamento
         {
@@ -19,20 +19,15 @@ namespace CGEntity.Entities
             get { return this.DbSetLancamento.Descricao; }
             set
             {
-                if (value != this.DbSetLancamento.Descricao)
-                {
-                    this.DbSetLancamento.Descricao = value;
-                }
+                if (value != this.DbSetLancamento.Descricao) { this.DbSetLancamento.Descricao = value; }
             }
         }
-        public double Valor 
-        { get { return this.DbSetLancamento.Valor; }
+        public double Valor
+        {
+            get { return this.DbSetLancamento.Valor; }
             set
             {
-                if (value != this.DbSetLancamento.Valor)
-                { 
-                    this.DbSetLancamento.Valor = value; 
-                }
+                if (value != this.DbSetLancamento.Valor) { this.DbSetLancamento.Valor = value; }
             }
         }
         public bool Recorrente
@@ -43,67 +38,87 @@ namespace CGEntity.Entities
                 if (value = !this.DbSetLancamento.Recorrente) { this.DbSetLancamento.Recorrente = value; }
             }
         }
-        int _idFavorecido;
-        public int IdFavorecido
+        public int FavorecidoId
         {
-            get { return _idFavorecido; }
+            get { return this.DbSetLancamento.FavorecidoId; }
             set
             {
                 if (value <= 0) { throw new ArgumentException("Id de favorecido inválido!"); }
-                if (_idFavorecido != value) { _idFavorecido = value; }
+                if (this.DbSetLancamento.FavorecidoId != value) { this.DbSetLancamento.FavorecidoId = value; }
             }
         }
-        int _idPagador;
-        public int IdPagador
+        public int PagadorId
         {
-            get { return _idPagador; }
+            get { return this.DbSetLancamento.PagadorId; }
             set
             {
                 if (value <= 0) { throw new ArgumentException("Id de pagador inválido!"); }
-                if (_idPagador != value) { _idPagador = value; }
+                if (this.DbSetLancamento.PagadorId != value) { this.DbSetLancamento.PagadorId = value; }
             }
         }
-        int _idModalidade;
-        public int IdModalidade
+        public int ModalidadeId
         {
-            get { return _idModalidade; }
+            get { return this.DbSetLancamento.ModalidadeId; }
             set
             {
                 if (value <= 0) { throw new ArgumentException("Id de modalidade inválido!"); }
-                if (_idModalidade != value) { _idModalidade = value; }
+                if (this.DbSetLancamento.ModalidadeId != value) { this.DbSetLancamento.ModalidadeId = value; }
             }
         }
-        int _idInstuicao;
-        public int IdInstituicao
+        public int InstituicaoId
         {
-            get { return _idInstuicao; }
+            get { return this.DbSetLancamento.InstituicaoId; }
             set
             {
                 if (value <= 0) { throw new ArgumentException("Id de instituição inválido!"); }
-                if (_idInstuicao != value) { _idInstuicao = value; }
+                if (this.DbSetLancamento.InstituicaoId != value) { this.DbSetLancamento.InstituicaoId = value; }
             }
         }
-        public int IdCategoria { get; set; }
-        public int IdSubCategoria { get; set; }
-        public int IdFornecedor { get; set; }
+        public int CategoriaId
+        {
+            get { return this.DbSetLancamento.CategoriaId; }
+            set
+            {
+                if (value <= 0) { throw new ArgumentException("Id de Categoria inválido!"); }
+                if (this.DbSetLancamento.CategoriaId != value) { this.DbSetLancamento.CategoriaId = value; }
+            }
+        }
+        public int? SubCategoriaId
+        {
+            get { return this.DbSetLancamento.SubCategoriaId; }
+            set
+            {
+                if (this.DbSetLancamento.SubCategoriaId != value) { this.DbSetLancamento.SubCategoriaId = value; }
+            }
+        }
+        public int? FornecedorId
+        {
+            get { return this.DbSetLancamento.FornecedorId; }
+            set
+            {
+                if (this.DbSetLancamento.FornecedorId != value) { this.DbSetLancamento.FornecedorId = value; }
+            }
+        }
 
-        public Lancamento(int id, DateTime data, int idFavorecido, int idPagador, int idModalidade, int idInstituicao, int idCategoria,
+        public Lancamento(DateTime data, int idFavorecido, int idPagador, int idModalidade, int idInstituicao, int idCategoria,
             int idSubCategoria, int idFornecedor, string descricao, double valor, bool recorrente)
         {
-            if (id == 0) { id = Guid.NewGuid().GetHashCode(); }
             DbSetLancamento = new DbSetLancamento();
-            DbSetLancamento.Id = id;
             DbSetLancamento.Data = data;
-            IdFavorecido = idFavorecido;
-            IdPagador = idPagador;
-            IdModalidade = idModalidade;
-            IdInstituicao = idInstituicao;
-            IdCategoria = idCategoria;
-            IdSubCategoria = idSubCategoria;
-            IdFornecedor = idFornecedor;
+            DbSetLancamento.FavorecidoId = idFavorecido;
+            DbSetLancamento.PagadorId = idPagador;
+            DbSetLancamento.ModalidadeId = idModalidade;
+            DbSetLancamento.InstituicaoId = idInstituicao;
+            DbSetLancamento.CategoriaId = idCategoria;
+            DbSetLancamento.SubCategoriaId = idSubCategoria;
+            DbSetLancamento.FornecedorId = idFornecedor;
             Descricao = descricao;
             Valor = valor;
             Recorrente = recorrente;
+        }
+        public Lancamento(DbSetLancamento dbSetLancamento)
+        {
+            this.DbSetLancamento = dbSetLancamento;
         }
     }
 }

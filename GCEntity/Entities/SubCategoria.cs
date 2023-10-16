@@ -4,9 +4,9 @@ namespace CGEntity.Entities
 {
     public class SubCategoria
     {
-        public DbSetSubCategoria DbSetSubCategoria { get; }
-        public ICollection<Lancamento>? Lancamentos { get; set; }
-        public int? CategoriaId { get; set; }
+        public DbSetSubCategoria DbSetSubCategoria { get; } = new DbSetSubCategoria();
+        public ICollection<Lancamento>? Lancamentos { get; set; } = new List<Lancamento>();
+        public int? CategoriaId { get { return this.DbSetSubCategoria.Id; } }
         public int Id { get { return this.DbSetSubCategoria.Id; } }
         public string Descricao
         {
@@ -20,16 +20,16 @@ namespace CGEntity.Entities
                 }
             }
         }
-        public SubCategoria(int id, int idCategoria, string descricao)
+        public SubCategoria(int idCategoria, string descricao)
         {
-            if (id == 0) { id = Guid.NewGuid().GetHashCode(); }
-            DbSetSubCategoria = new DbSetSubCategoria();
-            DbSetSubCategoria.Id = id;
             ValidaDescricao(descricao);
-            DbSetSubCategoria.Descricao = descricao;
-            if (idCategoria > 0) { this.CategoriaId = idCategoria; }
-            else { this.CategoriaId = null; }
-            this.Lancamentos = new List<Lancamento>();
+            this.DbSetSubCategoria.Descricao = descricao;
+            this.DbSetSubCategoria.CategoriaId = idCategoria;
+        }
+        public SubCategoria(DbSetSubCategoria dbSetSubCategoria)
+        {
+            ValidaDescricao(dbSetSubCategoria.Descricao);
+            this.DbSetSubCategoria = dbSetSubCategoria;
         }
         private void ValidaDescricao(string value)
         {

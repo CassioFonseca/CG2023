@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CGServer.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231006222357_IncluindoTabelasExcluidas")]
-    partial class IncluindoTabelasExcluidas
+    [Migration("20231016124822_1610-2")]
+    partial class _16102
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace CGServer.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("CGEntity.Entities.Categoria", b =>
+            modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetCategoria", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -43,7 +43,7 @@ namespace CGServer.Migrations
                     b.ToTable("Categorias");
                 });
 
-            modelBuilder.Entity("CGEntity.Entities.Favorecido", b =>
+            modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetFavorecido", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -61,7 +61,7 @@ namespace CGServer.Migrations
                     b.ToTable("Favorecidos");
                 });
 
-            modelBuilder.Entity("CGEntity.Entities.Fornecedor", b =>
+            modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetFornecedor", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -79,7 +79,7 @@ namespace CGServer.Migrations
                     b.ToTable("Fornecedores");
                 });
 
-            modelBuilder.Entity("CGEntity.Entities.Instituicao", b =>
+            modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetInstituicao", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -97,7 +97,7 @@ namespace CGServer.Migrations
                     b.ToTable("Instituicoes");
                 });
 
-            modelBuilder.Entity("CGEntity.Entities.Lancamento", b =>
+            modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetLancamento", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -105,7 +105,7 @@ namespace CGServer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CategoriaId")
+                    b.Property<int>("CategoriaId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Data")
@@ -116,19 +116,19 @@ namespace CGServer.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int?>("FavorecidoId")
+                    b.Property<int>("FavorecidoId")
                         .HasColumnType("int");
 
                     b.Property<int?>("FornecedorId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("InstituicaoId")
+                    b.Property<int>("InstituicaoId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ModalidadeId")
+                    b.Property<int>("ModalidadeId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PagadorId")
+                    b.Property<int>("PagadorId")
                         .HasColumnType("int");
 
                     b.Property<bool>("Recorrente")
@@ -159,7 +159,7 @@ namespace CGServer.Migrations
                     b.ToTable("Lancamentos");
                 });
 
-            modelBuilder.Entity("CGEntity.Entities.Modalidade", b =>
+            modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetModalidade", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -177,7 +177,7 @@ namespace CGServer.Migrations
                     b.ToTable("Modalidades");
                 });
 
-            modelBuilder.Entity("CGEntity.Entities.Pagador", b =>
+            modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetPagador", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -195,7 +195,7 @@ namespace CGServer.Migrations
                     b.ToTable("Pagadores");
                 });
 
-            modelBuilder.Entity("CGEntity.Entities.SubCategoria", b =>
+            modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetSubCategoria", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -203,7 +203,7 @@ namespace CGServer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CategoriaId")
+                    b.Property<int>("CategoriaId")
                         .HasColumnType("int");
 
                     b.Property<string>("Descricao")
@@ -218,77 +218,105 @@ namespace CGServer.Migrations
                     b.ToTable("SubCategorias");
                 });
 
-            modelBuilder.Entity("CGEntity.Entities.Lancamento", b =>
+            modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetLancamento", b =>
                 {
-                    b.HasOne("CGEntity.Entities.Categoria", null)
+                    b.HasOne("CGEntity.EntitiesDbSet.DbSetCategoria", "Categoria")
                         .WithMany("Lancamentos")
-                        .HasForeignKey("CategoriaId");
+                        .HasForeignKey("CategoriaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("CGEntity.Entities.Favorecido", null)
+                    b.HasOne("CGEntity.EntitiesDbSet.DbSetFavorecido", "Favorecido")
                         .WithMany("Lancamentos")
-                        .HasForeignKey("FavorecidoId");
+                        .HasForeignKey("FavorecidoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("CGEntity.Entities.Fornecedor", null)
+                    b.HasOne("CGEntity.EntitiesDbSet.DbSetFornecedor", "Fornecedor")
                         .WithMany("Lancamentos")
                         .HasForeignKey("FornecedorId");
 
-                    b.HasOne("CGEntity.Entities.Instituicao", null)
+                    b.HasOne("CGEntity.EntitiesDbSet.DbSetInstituicao", "Instituicao")
                         .WithMany("Lancamentos")
-                        .HasForeignKey("InstituicaoId");
+                        .HasForeignKey("InstituicaoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("CGEntity.Entities.Modalidade", null)
+                    b.HasOne("CGEntity.EntitiesDbSet.DbSetModalidade", "Modalidade")
                         .WithMany("Lancamentos")
-                        .HasForeignKey("ModalidadeId");
+                        .HasForeignKey("ModalidadeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("CGEntity.Entities.Pagador", null)
+                    b.HasOne("CGEntity.EntitiesDbSet.DbSetPagador", "Pagador")
                         .WithMany("Lancamentos")
-                        .HasForeignKey("PagadorId");
+                        .HasForeignKey("PagadorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("CGEntity.Entities.SubCategoria", null)
+                    b.HasOne("CGEntity.EntitiesDbSet.DbSetSubCategoria", "SubCategoria")
                         .WithMany("Lancamentos")
                         .HasForeignKey("SubCategoriaId");
+
+                    b.Navigation("Categoria");
+
+                    b.Navigation("Favorecido");
+
+                    b.Navigation("Fornecedor");
+
+                    b.Navigation("Instituicao");
+
+                    b.Navigation("Modalidade");
+
+                    b.Navigation("Pagador");
+
+                    b.Navigation("SubCategoria");
                 });
 
-            modelBuilder.Entity("CGEntity.Entities.SubCategoria", b =>
+            modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetSubCategoria", b =>
                 {
-                    b.HasOne("CGEntity.Entities.Categoria", null)
-                        .WithMany("Subcategorias")
-                        .HasForeignKey("CategoriaId");
+                    b.HasOne("CGEntity.EntitiesDbSet.DbSetCategoria", "Categoria")
+                        .WithMany("SubCategorias")
+                        .HasForeignKey("CategoriaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Categoria");
                 });
 
-            modelBuilder.Entity("CGEntity.Entities.Categoria", b =>
-                {
-                    b.Navigation("Lancamentos");
-
-                    b.Navigation("Subcategorias");
-                });
-
-            modelBuilder.Entity("CGEntity.Entities.Favorecido", b =>
-                {
-                    b.Navigation("Lancamentos");
-                });
-
-            modelBuilder.Entity("CGEntity.Entities.Fornecedor", b =>
-                {
-                    b.Navigation("Lancamentos");
-                });
-
-            modelBuilder.Entity("CGEntity.Entities.Instituicao", b =>
-                {
-                    b.Navigation("Lancamentos");
-                });
-
-            modelBuilder.Entity("CGEntity.Entities.Modalidade", b =>
+            modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetCategoria", b =>
                 {
                     b.Navigation("Lancamentos");
+
+                    b.Navigation("SubCategorias");
                 });
 
-            modelBuilder.Entity("CGEntity.Entities.Pagador", b =>
+            modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetFavorecido", b =>
                 {
                     b.Navigation("Lancamentos");
                 });
 
-            modelBuilder.Entity("CGEntity.Entities.SubCategoria", b =>
+            modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetFornecedor", b =>
+                {
+                    b.Navigation("Lancamentos");
+                });
+
+            modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetInstituicao", b =>
+                {
+                    b.Navigation("Lancamentos");
+                });
+
+            modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetModalidade", b =>
+                {
+                    b.Navigation("Lancamentos");
+                });
+
+            modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetPagador", b =>
+                {
+                    b.Navigation("Lancamentos");
+                });
+
+            modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetSubCategoria", b =>
                 {
                     b.Navigation("Lancamentos");
                 });

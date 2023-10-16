@@ -14,13 +14,18 @@ namespace CGController
         {
             return favorecidoUC.AdicionarFavorecido(nome);
         }
-        public Favorecido CriarCategoria(string nome)
+        public Favorecido CriarFavorecido(string nome)
         {
-            return favorecidoUC.CriarFavorecido(nome);
+            return favorecidoUC.Criar(nome);
         }
-        public Favorecido GetFavorecidoId(int id)
+        public Favorecido? GetFavorecidoId(int id)
         {
-            return favorecidoUC.GetFavorecidoId(id);
+            return favorecidoUC.GetId(id);
+
+        }
+        public Favorecido? GetFirst()
+        {
+            return favorecidoUC.GetFirst();
 
         }
 

@@ -4,7 +4,7 @@ namespace CGEntity.Entities
 {
     public class Categoria
     {
-        public DbSetCategoria DbSetCategoria { get; }
+        public DbSetCategoria DbSetCategoria { get; } = new DbSetCategoria();
         public int Id { get { return this.DbSetCategoria.Id; } }
         public string Descricao
         {
@@ -18,22 +18,24 @@ namespace CGEntity.Entities
                 }
             }
         }
-        public ICollection<SubCategoria>? Subcategorias { get; set; }
-        public Categoria(int id, string descricao)
-        {
-            if (id == 0) { id = Guid.NewGuid().GetHashCode(); }
-            DbSetCategoria = new DbSetCategoria();
-            DbSetCategoria.Id = id;
-            ValidaDescricao(descricao);
-            DbSetCategoria.Descricao = descricao;
-            this.Subcategorias = new List<SubCategoria>();
-        }
+        private ICollection<SubCategoria> SubCategorias { get; set; } = new List<SubCategoria>();
+        public ICollection<Lancamento>? Lancamentos { get; set; } = new List<Lancamento>();
         private void ValidaDescricao(string value)
         {
             if (string.IsNullOrEmpty(value))
             {
-                throw new ArgumentException("O nome da Categoria não pode ser vazio ou nulo.");
+                throw new ArgumentException("O nome da categoria não pode ser vazio ou nulo.");
             }
+        }
+        public Categoria(string descricao)
+        {
+            ValidaDescricao(descricao);
+            DbSetCategoria.Descricao = descricao;
+        }
+        public Categoria(DbSetCategoria dbSetCategoria)
+        {
+            ValidaDescricao(dbSetCategoria.Descricao);
+            DbSetCategoria = dbSetCategoria;
         }
     }
 }

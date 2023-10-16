@@ -5,44 +5,46 @@
 namespace CGServer.Migrations
 {
     /// <inheritdoc />
-    public partial class AtualizandoCategoriaComSubCategoria : Migration
+    public partial class Passo4 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<int>(
                 name: "CategoriaId",
-                table: "SubCategorias",
+                table: "Lancamentos",
                 type: "int",
-                nullable: true);
+                nullable: false,
+                defaultValue: 0);
 
             migrationBuilder.CreateIndex(
-                name: "IX_SubCategorias_CategoriaId",
-                table: "SubCategorias",
+                name: "IX_Lancamentos_CategoriaId",
+                table: "Lancamentos",
                 column: "CategoriaId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_SubCategorias_Categorias_CategoriaId",
-                table: "SubCategorias",
+                name: "FK_Lancamentos_Categorias_CategoriaId",
+                table: "Lancamentos",
                 column: "CategoriaId",
                 principalTable: "Categorias",
-                principalColumn: "Id");
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_SubCategorias_Categorias_CategoriaId",
-                table: "SubCategorias");
+                name: "FK_Lancamentos_Categorias_CategoriaId",
+                table: "Lancamentos");
 
             migrationBuilder.DropIndex(
-                name: "IX_SubCategorias_CategoriaId",
-                table: "SubCategorias");
+                name: "IX_Lancamentos_CategoriaId",
+                table: "Lancamentos");
 
             migrationBuilder.DropColumn(
                 name: "CategoriaId",
-                table: "SubCategorias");
+                table: "Lancamentos");
         }
     }
 }

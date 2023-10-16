@@ -1,12 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CGEntity.EntitiesDbSet
 {
     public class DbSetInstituicao
     {
+        [Key]
         public int Id { get; set; }
         [MaxLength(50)] 
         public virtual string Nome {  get; set; } = string.Empty;
-        public virtual ICollection<DbSetLancamento>? Lancamentos { get; set; }
+        [ForeignKey("Id")]
+        public List<DbSetLancamento>? Lancamentos { get; set; }
     }
 }

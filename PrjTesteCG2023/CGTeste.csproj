@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CGController\CGController.csproj" />
     <ProjectReference Include="..\CGDomain\CGDomain.csproj" />
     <ProjectReference Include="..\CGServer\CGServer.csproj" />
     <ProjectReference Include="..\GCEntity\CGEntity.csproj" />

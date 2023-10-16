@@ -6,39 +6,45 @@ namespace CGDomain.UsesCases
 {
     public class FavorecidoUC
     {
-        public FavorecidoUC()
-        {
-
-        }
+        public FavorecidoUC() { }
 
         public int AdicionarFavorecido(string nome) 
         {
-            Favorecido favorecido = CriarFavorecido(nome);
+            Favorecido favorecido = Criar(nome);
             FavorecidoRepository favorecidoRepository = new FavorecidoRepository();
-            favorecidoRepository.Adicionar(favorecido.DbSetFavorecido);
-            SalvarFavorecido(favorecidoRepository);
+            favorecidoRepository.AdicionarDbSet(favorecido.DbSetFavorecido);
+            Salvar(favorecidoRepository);
             return favorecido.Id;
         }
 
-        public Favorecido CriarFavorecido(string nome)
+        public Favorecido Criar(string nome)
         {
             return new Favorecido(nome);
         }
-        public Favorecido CriarFavorecido(DbSetFavorecido dbSetFavorecido)
+        public Favorecido Criar(DbSetFavorecido dbSetFavorecido)
         {
             return new Favorecido(dbSetFavorecido);
         }
 
-        private void SalvarFavorecido(FavorecidoRepository favorecidoRepository) 
+        private void Salvar(FavorecidoRepository favorecidoRepository) 
         {
             favorecidoRepository.Salvar();
         }
 
-        public Favorecido GetFavorecidoId(int id) 
+        public Favorecido? GetId(int id) 
         {
             FavorecidoRepository favorecidoRepository = new FavorecidoRepository();
-            DbSetFavorecido dbSetFavorecido = favorecidoRepository.GetId(id);
-            Favorecido favorecido = CriarFavorecido(dbSetFavorecido);
+            DbSetFavorecido? dbSetFavorecido = favorecidoRepository.DbSetGetId(id);
+            if (dbSetFavorecido == null) return null;
+            Favorecido favorecido = Criar(dbSetFavorecido);
+            return favorecido;
+        }
+        public Favorecido? GetFirst()
+        {
+            FavorecidoRepository favorecidoRepository = new FavorecidoRepository();
+            DbSetFavorecido? dbSetFavorecido = favorecidoRepository.DbSetGetFirst();
+            if (dbSetFavorecido == null) return null;
+            Favorecido favorecido = Criar(dbSetFavorecido);
             return favorecido;
         }
     }

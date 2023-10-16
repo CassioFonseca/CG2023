@@ -1,32 +1,10 @@
-﻿using CGEntity.Entities;
-using CGEntity.EntitiesDbSet;
-using CGServer.Context;
-using Microsoft.EntityFrameworkCore;
+﻿using CGEntity.EntitiesDbSet;
+
 
 namespace CGServer.Repository
 {
-    public class ModalidadeRepository
+    public class ModalidadeRepository : BaseRepository<DbSetModalidade>
     {
-        private DbSetModalidade DbSetModalidade { get; set; }
-        private DbContext DbContext { get; set; }
-        public ModalidadeRepository(Modalidade modalidade)
-        {
-            this.DbSetModalidade = modalidade.DbSetModalidade;
-            this.DbContext = new AppDbContext();
-        }
 
-        public int AdicionarFavorecido()
-        {
-            var modalidade = DbContext.Set<DbSetModalidade>();
-            this.DbSetModalidade.Id = 0;
-            modalidade.Add(this.DbSetModalidade);
-            SalvarCategoria();
-            return this.DbSetModalidade.Id;
-        }
-
-        public void SalvarCategoria()
-        {
-            this.DbContext.SaveChanges();
-        }
     }
 }

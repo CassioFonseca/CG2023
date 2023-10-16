@@ -1,12 +1,86 @@
+using CGController;
+using CGDomain.UsesCases;
 using CGEntity.Entities;
 
 namespace CGTeste
-
-
 {
-    public class LancamentoRepositoryTest
+    public class LancamentoTest
     {
-       /* [Fact]
+        [Fact]
+        public void TestCreateClass1()
+        {
+            LancamentoController lancamentoController = new LancamentoController();
+            int id = 0;
+            int idCategoria = GetIdCategoria();
+            int idSubCategoria = GetIdSubCategoria(idCategoria);
+            string descricaoLancamento = String.Format("Novo Lancamento {0}", Guid.NewGuid().ToString().Substring(0, 5));
+            Double valorLancamento = 10000.99;
+            bool recorrente = false;
+            int idNewLancamento = lancamentoController.Adicionar(DateTime.Now, GetIdFavorecido(), GetIdPagador(), GetIdModalidade(), GetIdInstituicao(), idCategoria, idSubCategoria, GetIdForncedor(),
+                descricaoLancamento, valorLancamento, recorrente);
+            Lancamento? lancamento = lancamentoController.GetId(idNewLancamento);
+            Assert.NotNull(lancamento);
+            Assert.NotEqual(id, lancamento.Id);
+            Assert.Equal(descricaoLancamento, lancamento.Descricao);
+
+        }
+
+        private int GetIdFavorecido()
+        {
+            FavorecidoController favorecidoController = new FavorecidoController();
+            Favorecido? favorecido = favorecidoController.GetFirst();
+            if (favorecido != null) { return favorecido.Id; }
+            else { return 0; }
+        }
+
+        private int GetIdPagador()
+        {
+            PagadorController pagadorController = new PagadorController();
+            Pagador? pagador = pagadorController.GetFirst();
+            if (pagador != null) { return pagador.Id; }
+            else { return 0; }
+        }
+        private int GetIdModalidade()
+        {
+            ModalidadeController modalidadeController = new ModalidadeController();
+            Modalidade? modalidade = modalidadeController.GetFirst();
+            if (modalidade != null) { return modalidade.Id; }
+            else { return 0; }
+        }
+        private int GetIdInstituicao()
+        {
+            InstituicaoController instituicaoController = new InstituicaoController();
+            Instituicao? instituicao = instituicaoController.GetFirst();
+            if (instituicao != null) { return instituicao.Id; }
+            else { return 0; }
+        }
+
+        private int GetIdCategoria()
+        {
+            CategoriaController categoriaController = new CategoriaController();
+            Categoria? categoria = categoriaController.GetFirst();
+            if (categoria != null) { return categoria.Id; }
+            else { return 0; }
+        }
+
+        private int GetIdSubCategoria(int idCategoria)
+        {
+            SubCategoriaController subCategoriaController = new SubCategoriaController();
+            SubCategoria? subcategoria = subCategoriaController.GetFirst(idCategoria);
+            if (subcategoria != null) { return subcategoria.Id; }
+            else { return 0; }
+        }
+        private int GetIdForncedor()
+        {
+            FornecedorController fornecedorController = new FornecedorController();
+            Fornecedor? fornecedor = fornecedorController.GetFirst();
+            if (fornecedor != null) { return fornecedor.Id; }
+            else { return 0; }
+        }
+
+
+
+        /* [Fact]
         public void TestCreateClass1()
         {
             int id = 1;

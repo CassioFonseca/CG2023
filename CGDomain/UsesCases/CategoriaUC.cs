@@ -1,23 +1,47 @@
 ﻿using CGEntity.Entities;
+using CGEntity.EntitiesDbSet;
 using CGServer.Repository;
 
 namespace CGDomain.UsesCases
 {
     public class CategoriaUC
     {
-        
-        public CategoriaUC() 
+        public CategoriaUC() { }
+        public int Adicionar(string descricao)
         {
+            Categoria categoria = Criar(descricao);
+            CategoriaRepository categoriaRepository = new CategoriaRepository();
+            categoriaRepository.AdicionarDbSet(categoria.DbSetCategoria);
+            Salvar(categoriaRepository);
+            return categoria.Id;
         }
-        public int AdicionarCategoria(int id, string descricao)
+        public Categoria Criar(string descricao)
         {
-            Categoria categoria = CriarCategoria(id, descricao);
-            CategoriaRepository categoriaRepository = new CategoriaRepository(categoria);
-            return categoriaRepository.AdicionarCategoria();
+            return new Categoria(descricao);
         }
-        public Categoria CriarCategoria(int id, string descricao)
+        public Categoria Criar(DbSetCategoria dbSetCategoria)
         {
-            return new Categoria(id, descricao);
+            return new Categoria(dbSetCategoria);
+        }
+        private void Salvar(CategoriaRepository categoriaRepository)
+        {
+            categoriaRepository.Salvar();
+        }
+        public Categoria? GetId(int id)
+        {
+            CategoriaRepository categoriaRepository = new CategoriaRepository();
+            DbSetCategoria? dbSetCategoria = categoriaRepository.DbSetGetId(id);
+            if (dbSetCategoria == null) return null;
+            Categoria categoria = Criar(dbSetCategoria);
+            return categoria;
+        }
+        public Categoria? GetFirst()
+        {
+            CategoriaRepository categoriaRepository = new CategoriaRepository();
+            DbSetCategoria? dbSetCategoria = categoriaRepository.DbSetGetFirst();
+            if (dbSetCategoria == null) return null;
+            Categoria categoria = Criar(dbSetCategoria);
+            return categoria;
         }
     }
 }

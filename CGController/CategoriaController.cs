@@ -10,13 +10,22 @@ namespace CGController
         { 
             this.categoriaUC = new CategoriaUC();
         }
-        public void AdicionarCategoria(int id, string descricao)
+        public int Adicionar(string descricao)
         {
-            categoriaUC.AdicionarCategoria(id, descricao);
+            return categoriaUC.Adicionar(descricao);
         }
-        public Categoria CriarCategoria(int id, string descricao)
+        public Categoria Criar(string descricao)
         {
-            return categoriaUC.CriarCategoria(id, descricao);
+            return categoriaUC.Criar(descricao);
+        }
+        public Categoria? GetId(int id)
+        {
+            return categoriaUC.GetId(id);
+
+        }
+        public Categoria? GetFirst()
+        {
+            return categoriaUC.GetFirst();
         }
 
     }

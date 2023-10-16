@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CGServer.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231007170555_AdicionandoTesteX2")]
-    partial class AdicionandoTesteX2
+    [Migration("20231016003259_Passo-2")]
+    partial class Passo2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -108,27 +108,6 @@ namespace CGServer.Migrations
                     b.Property<DateTime>("Data")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("DbSetCategoriaId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DbSetFavorecidoId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DbSetFornecedorId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DbSetInstituicaoId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DbSetModalidadeId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DbSetPagadorId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DbSetSubCategoriaId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Descricao")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -141,20 +120,6 @@ namespace CGServer.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DbSetCategoriaId");
-
-                    b.HasIndex("DbSetFavorecidoId");
-
-                    b.HasIndex("DbSetFornecedorId");
-
-                    b.HasIndex("DbSetInstituicaoId");
-
-                    b.HasIndex("DbSetModalidadeId");
-
-                    b.HasIndex("DbSetPagadorId");
-
-                    b.HasIndex("DbSetSubCategoriaId");
 
                     b.ToTable("Lancamentos");
                 });
@@ -203,10 +168,7 @@ namespace CGServer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("DbSetCategoriaId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DbSetTesteXId")
+                    b.Property<int>("CategoriaId")
                         .HasColumnType("int");
 
                     b.Property<string>("Descricao")
@@ -216,112 +178,25 @@ namespace CGServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DbSetCategoriaId");
-
-                    b.HasIndex("DbSetTesteXId");
+                    b.HasIndex("CategoriaId");
 
                     b.ToTable("SubCategorias");
                 });
 
-            modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetTesteX", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Descricao")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TesteX");
-                });
-
-            modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetLancamento", b =>
-                {
-                    b.HasOne("CGEntity.EntitiesDbSet.DbSetCategoria", null)
-                        .WithMany("Lancamentos")
-                        .HasForeignKey("DbSetCategoriaId");
-
-                    b.HasOne("CGEntity.EntitiesDbSet.DbSetFavorecido", null)
-                        .WithMany("Lancamentos")
-                        .HasForeignKey("DbSetFavorecidoId");
-
-                    b.HasOne("CGEntity.EntitiesDbSet.DbSetFornecedor", null)
-                        .WithMany("Lancamentos")
-                        .HasForeignKey("DbSetFornecedorId");
-
-                    b.HasOne("CGEntity.EntitiesDbSet.DbSetInstituicao", null)
-                        .WithMany("Lancamentos")
-                        .HasForeignKey("DbSetInstituicaoId");
-
-                    b.HasOne("CGEntity.EntitiesDbSet.DbSetModalidade", null)
-                        .WithMany("Lancamentos")
-                        .HasForeignKey("DbSetModalidadeId");
-
-                    b.HasOne("CGEntity.EntitiesDbSet.DbSetPagador", null)
-                        .WithMany("Lancamentos")
-                        .HasForeignKey("DbSetPagadorId");
-
-                    b.HasOne("CGEntity.EntitiesDbSet.DbSetSubCategoria", null)
-                        .WithMany("Lancamentos")
-                        .HasForeignKey("DbSetSubCategoriaId");
-                });
-
             modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetSubCategoria", b =>
                 {
-                    b.HasOne("CGEntity.EntitiesDbSet.DbSetCategoria", null)
-                        .WithMany("Subcategorias")
-                        .HasForeignKey("DbSetCategoriaId");
+                    b.HasOne("CGEntity.EntitiesDbSet.DbSetCategoria", "Categoria")
+                        .WithMany("SubCategorias")
+                        .HasForeignKey("CategoriaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("CGEntity.EntitiesDbSet.DbSetTesteX", null)
-                        .WithMany("Subcategoriasx")
-                        .HasForeignKey("DbSetTesteXId");
+                    b.Navigation("Categoria");
                 });
 
             modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetCategoria", b =>
                 {
-                    b.Navigation("Lancamentos");
-
-                    b.Navigation("Subcategorias");
-                });
-
-            modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetFavorecido", b =>
-                {
-                    b.Navigation("Lancamentos");
-                });
-
-            modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetFornecedor", b =>
-                {
-                    b.Navigation("Lancamentos");
-                });
-
-            modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetInstituicao", b =>
-                {
-                    b.Navigation("Lancamentos");
-                });
-
-            modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetModalidade", b =>
-                {
-                    b.Navigation("Lancamentos");
-                });
-
-            modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetPagador", b =>
-                {
-                    b.Navigation("Lancamentos");
-                });
-
-            modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetSubCategoria", b =>
-                {
-                    b.Navigation("Lancamentos");
-                });
-
-            modelBuilder.Entity("CGEntity.EntitiesDbSet.DbSetTesteX", b =>
-                {
-                    b.Navigation("Subcategoriasx");
+                    b.Navigation("SubCategorias");
                 });
 #pragma warning restore 612, 618
         }
