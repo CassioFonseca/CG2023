@@ -31,6 +31,9 @@ namespace CGConsole
                 case 1:
                     MontaMenuCategoria.ShowMenu();
                     break;
+                case 2:
+                    MontaMenuFavorecido.ShowMenu();
+                    break;
             }
         }
 

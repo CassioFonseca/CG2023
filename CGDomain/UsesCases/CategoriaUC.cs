@@ -1,7 +1,6 @@
 ﻿using CGEntity.Entities;
 using CGEntity.EntitiesDbSet;
 using CGServer.Repository;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace CGDomain.UsesCases
 {

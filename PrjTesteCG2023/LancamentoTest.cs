@@ -27,8 +27,7 @@ namespace CGTeste
 
         private static int GetIdFavorecido()
         {
-            FavorecidoController favorecidoController = new();
-            Favorecido? favorecido = favorecidoController.First;
+            Favorecido? favorecido = FavorecidoController.GetFirst;
             if (favorecido != null) { return favorecido.Id; }
             else { return 0; }
         }
@@ -57,7 +56,6 @@ namespace CGTeste
 
         private static int GetIdCategoria()
         {
-            CategoriaController categoriaController = new();
             Categoria? categoria = CategoriaController.GetFirst();
             if (categoria != null) { return categoria.Id; }
             else { return 0; }
