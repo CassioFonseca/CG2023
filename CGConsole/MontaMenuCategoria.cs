@@ -105,7 +105,6 @@ namespace CGConsole
             Console.ReadLine();
             ShowMenu();
         }
-
         private static void RemoveCategoria()
         {
             Console.Clear();
