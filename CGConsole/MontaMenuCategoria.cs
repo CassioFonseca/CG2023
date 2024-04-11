@@ -21,7 +21,7 @@ namespace CGConsole
             Console.WriteLine("3 - Alterar Categoria");
             Console.WriteLine("4 - Excluir Categoria");
             Console.WriteLine("0 - Retornar");
-            Console.WriteLine("Digite uma opção acima:");
+            Console.Write("Digite uma opção acima:");
             string? entrada = Console.ReadLine();
             _ = int.TryParse(entrada, out int result);
             switch (result)
@@ -35,34 +35,31 @@ namespace CGConsole
                     GetAllCategorias();
                     break;
                 case 3:
-                    //AlterarCategoria();
+                    ChangeCategoria();
                     break;
                 case 4:
-                    //ExcluirCategoria();
+                    RemoveCategoria();
                     break;
             }
         }
 
         private static void AddCategoria()
         {
-            Console.WriteLine("Digite uma descrição para a categoria: ");
+            Console.Write("Digite uma descrição para a categoria: ");
             string? dsCategoria = Console.ReadLine();
             if (string.IsNullOrWhiteSpace(dsCategoria))
-            {
                 Console.WriteLine("Categoria invalida!");
-                return;
-            }
-            int idNewCategoria = CategoriaController.Add(dsCategoria);
-            Categoria? categoria = GetCategoriaId(idNewCategoria);
-            if (categoria == null)
+            else
             {
-                Console.WriteLine("Erro ao adicionar categoria!");
-                Console.ReadLine();
-                return;
+                int idNewCategoria = CategoriaController.Add(dsCategoria);
+                Categoria? categoria = GetCategoriaId(idNewCategoria);
+                if (categoria == null)
+                    Console.WriteLine("Erro ao adicionar categoria!");
+                else
+                    Console.WriteLine(String.Format("Id: {0} - Descrição {1}", categoria.Id, categoria.Descricao));
             }
-            Console.WriteLine(categoria.Id);
-            Console.WriteLine(categoria.Descricao);
             Console.ReadLine();
+            ShowMenu();
         }
         private static Categoria? GetCategoriaId(int id)
         {
@@ -74,16 +71,67 @@ namespace CGConsole
             Console.WriteLine("Listando Categorias: ");
             List<Categoria>? Categorias = CategoriaController.GetAll();
             if (Categorias == null)
-            {
                 Console.WriteLine("Não existem categorias!!");
-                return;
+            else
+            {
+                foreach (Categoria categoria in Categorias)
+                    Console.WriteLine(String.Format("Id: {0} - Descrição {1}", categoria.Id, categoria.Descricao));
+                Console.WriteLine(string.Format("Total de categorias {0}", Categorias.Count));
             }
-            foreach (Categoria categoria in Categorias)
+            Console.ReadLine();
+            ShowMenu();
+        }
+        private static void ChangeCategoria()
+        {
+            Console.Clear();
+            Console.WriteLine("Alterar Categoria");
+            Console.Write("Digite o id da catetoria a ser alterada: ");
+            _ = int.TryParse(Console.ReadLine(), out var id);
+            Categoria? categoria = GetCategoriaId(id);
+            if (categoria == null)
+                Console.WriteLine("Categoria não existe!");
+            else
             {
                 Console.WriteLine(String.Format("Id: {0} - Descrição {1}", categoria.Id, categoria.Descricao));
+                Console.Write("Nova descrição: ");
+                categoria.Descricao = Console.ReadLine() ?? string.Empty;
+                CategoriaController.Change(categoria);
+                categoria = GetCategoriaId(categoria.Id);
+                if (categoria == null)
+                    Console.WriteLine("Categoria não existe!");
+                else
+                    Console.WriteLine(String.Format("Id: {0} - Descrição {1}", categoria.Id, categoria.Descricao));
             }
-            Console.WriteLine(string.Format("Total de categorias {0}",Categorias.Count));
             Console.ReadLine();
+            ShowMenu();
+        }
+
+        private static void RemoveCategoria()
+        {
+            Console.Clear();
+            Console.WriteLine("Excluir Categoria");
+            Console.Write("Digite o id da catetoria a ser excluida: ");
+            _ = int.TryParse(Console.ReadLine(), out var id);
+            Categoria? categoria = GetCategoriaId(id);
+            if (categoria == null)
+                Console.WriteLine("Categoria não existe!");
+            else
+            {
+                Console.WriteLine(String.Format("Id: {0} - Descrição {1}", categoria.Id, categoria.Descricao));
+                Console.Write("Confirma exclusão(s/n)?");
+                string confirma = Console.ReadLine() ?? string.Empty;
+                if (confirma == "s")
+                {
+                    CategoriaController.Remove(categoria);
+                    categoria = GetCategoriaId(categoria.Id);
+                    if (categoria == null)
+                        Console.WriteLine("Categoria removida!");
+                    else
+                        Console.WriteLine(String.Format("Id: {0} - Descrição {1}", categoria.Id, categoria.Descricao));
+                }
+            }
+            Console.ReadLine();
+            ShowMenu();
         }
     }
 }

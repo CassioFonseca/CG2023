@@ -12,7 +12,7 @@ namespace CGDomain.UsesCases
         {
             Favorecido favorecido = Criar(nome);
             FavorecidoRepository favorecidoRepository = new FavorecidoRepository();
-            favorecidoRepository.AdicionarDbSet(favorecido.DbSetFavorecido);
+            favorecidoRepository.Add(favorecido.DbSetFavorecido);
             Salvar(favorecidoRepository);
             return favorecido.Id;
         }
@@ -28,13 +28,13 @@ namespace CGDomain.UsesCases
 
         private void Salvar(FavorecidoRepository favorecidoRepository) 
         {
-            favorecidoRepository.Salvar();
+            favorecidoRepository.Salve();
         }
 
         public Favorecido? GetId(int id) 
         {
             FavorecidoRepository favorecidoRepository = new FavorecidoRepository();
-            DbSetFavorecido? dbSetFavorecido = favorecidoRepository.DbSetGetId(id);
+            DbSetFavorecido? dbSetFavorecido = favorecidoRepository.GetId(id);
             if (dbSetFavorecido == null) return null;
             Favorecido favorecido = Criar(dbSetFavorecido);
             return favorecido;
@@ -42,7 +42,7 @@ namespace CGDomain.UsesCases
         public Favorecido? GetFirst()
         {
             FavorecidoRepository favorecidoRepository = new FavorecidoRepository();
-            DbSetFavorecido? dbSetFavorecido = favorecidoRepository.DbSetGetFirst();
+            DbSetFavorecido? dbSetFavorecido = favorecidoRepository.GetFirst();
             if (dbSetFavorecido == null) return null;
             Favorecido favorecido = Criar(dbSetFavorecido);
             return favorecido;

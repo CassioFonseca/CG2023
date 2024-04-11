@@ -20,7 +20,7 @@ namespace CGEntity.Entities
         }
         private ICollection<SubCategoria> SubCategorias { get; set; } = new List<SubCategoria>();
         public ICollection<Lancamento>? Lancamentos { get; set; } = new List<Lancamento>();
-        private void ValidaDescricao(string value)
+        private static void ValidaDescricao(string value)
         {
             if (string.IsNullOrEmpty(value))
             {

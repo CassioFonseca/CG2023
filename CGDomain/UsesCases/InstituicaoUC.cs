@@ -12,7 +12,7 @@ namespace CGDomain.UsesCases
         {
             Instituicao instituicao = Criar(value);
             InstituicaoRepository instituicaoRepository = new InstituicaoRepository();
-            instituicaoRepository.AdicionarDbSet(instituicao.DbSetInstituicao);
+            instituicaoRepository.Add(instituicao.DbSetInstituicao);
             Salvar(instituicaoRepository);
             return instituicao.Id;
         }
@@ -26,13 +26,13 @@ namespace CGDomain.UsesCases
         }
         private void Salvar(InstituicaoRepository instituicaoRepository)
         {
-            instituicaoRepository.Salvar();
+            instituicaoRepository.Salve();
         }
 
         public Instituicao? GetId(int id)
         {
             InstituicaoRepository instituicaoRepository = new InstituicaoRepository();
-            DbSetInstituicao? dbSetInstituicao = instituicaoRepository.DbSetGetId(id);
+            DbSetInstituicao? dbSetInstituicao = instituicaoRepository.GetId(id);
             if (dbSetInstituicao == null) return null;
             Instituicao instituicao = Criar(dbSetInstituicao);
             return instituicao;
@@ -40,7 +40,7 @@ namespace CGDomain.UsesCases
         public Instituicao? GetFirst()
         {
             InstituicaoRepository instituicaoRepository = new InstituicaoRepository();
-            DbSetInstituicao? dbSetInstituicao = instituicaoRepository.DbSetGetFirst();
+            DbSetInstituicao? dbSetInstituicao = instituicaoRepository.GetFirst();
             if (dbSetInstituicao == null) return null;
             Instituicao instituicao = Criar(dbSetInstituicao);
             return instituicao;

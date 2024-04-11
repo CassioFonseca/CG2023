@@ -14,7 +14,7 @@ namespace CGDomain.UsesCases
             Lancamento lancamento = Criar(data, idFavorecido, idPagador, idModalidade, idInstituicao, idCategoria,
                 idSubCategoria, idFornecedor, descricao, valor, recorrente);
             LancamentoRepository lancamentoRepository = new LancamentoRepository();
-            lancamentoRepository.AdicionarDbSet(lancamento.DbSetLancamento);
+            lancamentoRepository.Add(lancamento.DbSetLancamento);
             Salvar(lancamentoRepository);
             return lancamento.Id;
         }
@@ -30,12 +30,12 @@ namespace CGDomain.UsesCases
         }
         private void Salvar(LancamentoRepository lancamentoRepository)
         {
-            lancamentoRepository.Salvar();
+            lancamentoRepository.Salve();
         }
         public Lancamento? GetId(int id)
         {
             LancamentoRepository lancamentoRepository = new LancamentoRepository();
-            DbSetLancamento? dbSetLancamento = lancamentoRepository.DbSetGetId(id);
+            DbSetLancamento? dbSetLancamento = lancamentoRepository.GetId(id);
             if (dbSetLancamento == null) return null;
             Lancamento lancamento = Criar(dbSetLancamento);
             return lancamento;
@@ -43,7 +43,7 @@ namespace CGDomain.UsesCases
         public Lancamento? GetFirst()
         {
             LancamentoRepository lancamentoRepository = new LancamentoRepository();
-            DbSetLancamento? dbSetLancamento = lancamentoRepository.DbSetGetFirst();
+            DbSetLancamento? dbSetLancamento = lancamentoRepository.GetFirst();
             if (dbSetLancamento == null) return null;
             Lancamento lancamento = Criar(dbSetLancamento);
             return lancamento;

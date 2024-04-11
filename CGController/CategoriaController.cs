@@ -7,16 +7,15 @@ namespace CGController
     {
         public static int Add(string descricao)
         {
-            return CategoriaUC.Adicionar(descricao);
+            return CategoriaUC.Add(descricao);
         }
         public static Categoria New(string descricao)
         {
-            return CategoriaUC.Criar(descricao);
+            return CategoriaUC.New(descricao);
         }
         public static Categoria? GetId(int id)
         {
             return CategoriaUC.GetId(id);
-
         }
         public static Categoria? GetFirst()
         {
@@ -25,6 +24,14 @@ namespace CGController
         public static List<Categoria>? GetAll()
         {
             return CategoriaUC.GetAll;
+        }
+        public static void Change(Categoria categoria)
+        {
+            CategoriaUC.Change(categoria);
+        }
+        public static void Remove(Categoria categoria)
+        {
+            CategoriaUC.Remove(categoria);
         }
     }
 }

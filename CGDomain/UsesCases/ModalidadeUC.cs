@@ -12,7 +12,7 @@ namespace CGDomain.UsesCases
         {
             Modalidade modalidade = Criar(value);
             ModalidadeRepository modalidadeRepository = new ModalidadeRepository();
-            modalidadeRepository.AdicionarDbSet(modalidade.DbSetModalidade);
+            modalidadeRepository.Add(modalidade.DbSetModalidade);
             Salvar(modalidadeRepository);
             return modalidade.Id;
         }
@@ -26,12 +26,12 @@ namespace CGDomain.UsesCases
         }
         private void Salvar(ModalidadeRepository modalidadeRepository)
         {
-            modalidadeRepository.Salvar();
+            modalidadeRepository.Salve();
         }
         public Modalidade? GetId(int id)
         {
             ModalidadeRepository modalidadeRepository = new ModalidadeRepository();
-            DbSetModalidade? dbSetModalidade = modalidadeRepository.DbSetGetId(id);
+            DbSetModalidade? dbSetModalidade = modalidadeRepository.GetId(id);
             if (dbSetModalidade == null) return null;
             Modalidade modalidade = Criar(dbSetModalidade);
             return modalidade;
@@ -39,7 +39,7 @@ namespace CGDomain.UsesCases
         public Modalidade? GetFirst()
         {
             ModalidadeRepository modalidadeRepository = new ModalidadeRepository();
-            DbSetModalidade? dbSetModalidade = modalidadeRepository.DbSetGetFirst();
+            DbSetModalidade? dbSetModalidade = modalidadeRepository.GetFirst();
             if (dbSetModalidade == null) return null;
             Modalidade modalidade = Criar(dbSetModalidade);
             return modalidade;

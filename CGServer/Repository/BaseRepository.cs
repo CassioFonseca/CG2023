@@ -19,26 +19,38 @@ namespace CGServer.Repository
             this.DbSetRepository = this.DbContext.Set<T>();
         }
 
-        public void AdicionarDbSet(T entidade)
+        public void Add(T entidade)
         {
             this.DbSetRepository.Add(entidade);
         }
-        public void Salvar()
+        public void Salve()
         {
             this.DbContext.SaveChanges();
         }
-        public T? DbSetGetId(int id)
+        public T? GetId(int id)
         {
             return DbSetRepository.Find(id);
         }
-        public T? DbSetGetFirst()
+        public T? GetFirst()
         {
             T? result = DbSetRepository.First();
             return result;
         }
-        public List<T> DbSetGetAll()
+        public List<T> GetAll()
         {
             return DbSetRepository.ToList();
         }
+        public void Update(T entity)
+        {
+            this.DbSetRepository.Update(entity);
+            this.Salve();
+        }
+        public void Remove(T entity)
+        {
+            this.DbSetRepository.Remove(entity);
+            this.Salve();
+        }
+
+
     }
 }

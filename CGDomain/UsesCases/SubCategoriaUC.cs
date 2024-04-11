@@ -11,7 +11,7 @@ namespace CGDomain.UsesCases
         {
             SubCategoria subCategoria = Criar(idCategoria, descSubCategoria);
             SubCategoriaRepository subCategoriaRepository = new SubCategoriaRepository();
-            subCategoriaRepository.AdicionarDbSet(subCategoria.DbSetSubCategoria);
+            subCategoriaRepository.Add(subCategoria.DbSetSubCategoria);
             Salvar(subCategoriaRepository);
             return subCategoria.Id;
         }
@@ -25,12 +25,12 @@ namespace CGDomain.UsesCases
         }
         private void Salvar(SubCategoriaRepository pagadorRepository)
         {
-            pagadorRepository.Salvar();
+            pagadorRepository.Salve();
         }
         public SubCategoria? GetId(int id)
         {
             SubCategoriaRepository subCategoriaRepository = new SubCategoriaRepository();
-            DbSetSubCategoria? dbSetSubCategoria = subCategoriaRepository.DbSetGetId(id);
+            DbSetSubCategoria? dbSetSubCategoria = subCategoriaRepository.GetId(id);
             if (dbSetSubCategoria == null) return null;
             SubCategoria subCategoria = Criar(dbSetSubCategoria);
             return subCategoria;
@@ -38,7 +38,7 @@ namespace CGDomain.UsesCases
         public SubCategoria? GetFirst()
         {
             SubCategoriaRepository subCategoriaRepository = new SubCategoriaRepository();
-            DbSetSubCategoria? dbSetSubCategoria = subCategoriaRepository.DbSetGetFirst();
+            DbSetSubCategoria? dbSetSubCategoria = subCategoriaRepository.GetFirst();
             if (dbSetSubCategoria == null) return null;
             SubCategoria subCategoria = Criar(dbSetSubCategoria);
             return subCategoria;

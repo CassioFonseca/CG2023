@@ -11,7 +11,7 @@ namespace CGDomain.UsesCases
         {
             Pagador pagador = Criar(value);
             PagadorRepository pagadorRepository = new PagadorRepository();
-            pagadorRepository.AdicionarDbSet(pagador.DbSetPagador);
+            pagadorRepository.Add(pagador.DbSetPagador);
             Salvar(pagadorRepository);
             return pagador.Id;
         }
@@ -25,12 +25,12 @@ namespace CGDomain.UsesCases
         }
         private void Salvar(PagadorRepository pagadorRepository)
         {
-            pagadorRepository.Salvar();
+            pagadorRepository.Salve();
         }
         public Pagador? GetId(int id)
         {
             PagadorRepository pagadorRepository = new PagadorRepository();
-            DbSetPagador? dbSetPagador = pagadorRepository.DbSetGetId(id);
+            DbSetPagador? dbSetPagador = pagadorRepository.GetId(id);
             if (dbSetPagador == null) return null;
             Pagador pagador = Criar(dbSetPagador);
             return pagador;
@@ -38,7 +38,7 @@ namespace CGDomain.UsesCases
         public Pagador? GetFirst()
         {
             PagadorRepository pagadorRepository = new PagadorRepository();
-            DbSetPagador? dbSetPagador = pagadorRepository.DbSetGetFirst();
+            DbSetPagador? dbSetPagador = pagadorRepository.GetFirst();
             if (dbSetPagador == null) return null;
             Pagador pagador = Criar(dbSetPagador);
             return pagador;

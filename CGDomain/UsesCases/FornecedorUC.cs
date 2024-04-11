@@ -12,7 +12,7 @@ namespace CGDomain.UsesCases
         {
             Fornecedor fornecedor = Criar(value);
             FornecedorRepository fornecedorRepository = new FornecedorRepository();
-            fornecedorRepository.AdicionarDbSet(fornecedor.DbSetFornecedor);
+            fornecedorRepository.Add(fornecedor.DbSetFornecedor);
             Salvar(fornecedorRepository);
             return fornecedor.Id;
         }
@@ -26,13 +26,13 @@ namespace CGDomain.UsesCases
         }
         private void Salvar(FornecedorRepository fornecedorRepository)
         {
-            fornecedorRepository.Salvar();
+            fornecedorRepository.Salve();
         }
 
         public Fornecedor? GetId(int id)
         {
             FornecedorRepository fornecedorRepository = new FornecedorRepository();
-            DbSetFornecedor? dbSetFornecedor = fornecedorRepository.DbSetGetId(id);
+            DbSetFornecedor? dbSetFornecedor = fornecedorRepository.GetId(id);
             if (dbSetFornecedor == null) return null;
             Fornecedor fornecedor = Criar(dbSetFornecedor);
             return fornecedor;
@@ -40,7 +40,7 @@ namespace CGDomain.UsesCases
         public Fornecedor? GetFirst()
         {
             FornecedorRepository fornecedorRepository = new FornecedorRepository();
-            DbSetFornecedor? dbSetFornecedor = fornecedorRepository.DbSetGetFirst();
+            DbSetFornecedor? dbSetFornecedor = fornecedorRepository.GetFirst();
             if (dbSetFornecedor == null) return null;
             Fornecedor fornecedor = Criar(dbSetFornecedor);
             return fornecedor;
