@@ -7,41 +7,62 @@ namespace CGDomain.UsesCases
     public class CategoriaUC
     {
         public CategoriaUC() { }
-        public int Adicionar(string descricao)
+        public static int Adicionar(string descricao)
         {
+            if (string.IsNullOrWhiteSpace(descricao))
+            {
+                throw new ArgumentException($"'{nameof(descricao)}' cannot be null or whitespace.", nameof(descricao));
+            }
+
             Categoria categoria = Criar(descricao);
-            CategoriaRepository categoriaRepository = new CategoriaRepository();
+            CategoriaRepository categoriaRepository = new();
             categoriaRepository.AdicionarDbSet(categoria.DbSetCategoria);
             Salvar(categoriaRepository);
             return categoria.Id;
         }
-        public Categoria Criar(string descricao)
+        public static Categoria Criar(string descricao)
         {
             return new Categoria(descricao);
         }
-        public Categoria Criar(DbSetCategoria dbSetCategoria)
+        public static Categoria Criar(DbSetCategoria dbSetCategoria)
         {
             return new Categoria(dbSetCategoria);
         }
-        private void Salvar(CategoriaRepository categoriaRepository)
+        private static void Salvar(CategoriaRepository categoriaRepository)
         {
             categoriaRepository.Salvar();
         }
-        public Categoria? GetId(int id)
+        public static Categoria? GetId(int id)
         {
-            CategoriaRepository categoriaRepository = new CategoriaRepository();
+            CategoriaRepository categoriaRepository = new();
             DbSetCategoria? dbSetCategoria = categoriaRepository.DbSetGetId(id);
             if (dbSetCategoria == null) return null;
             Categoria categoria = Criar(dbSetCategoria);
             return categoria;
         }
-        public Categoria? GetFirst()
+        public static Categoria? First
         {
-            CategoriaRepository categoriaRepository = new CategoriaRepository();
-            DbSetCategoria? dbSetCategoria = categoriaRepository.DbSetGetFirst();
-            if (dbSetCategoria == null) return null;
-            Categoria categoria = Criar(dbSetCategoria);
-            return categoria;
+            get
+            {
+                CategoriaRepository categoriaRepository = new();
+                DbSetCategoria? dbSetCategoria = categoriaRepository.DbSetGetFirst();
+                if (dbSetCategoria == null) return null;
+                Categoria categoria = Criar(dbSetCategoria);
+                return categoria;
+            }
+        }
+        public static List<Categoria>? GetAll
+        {
+            get
+            {
+                CategoriaRepository categoriaRepository = new();
+                List<DbSetCategoria> dbSetCategorias = categoriaRepository.DbSetGetAll();
+                if (dbSetCategorias == null) return null;
+                List<Categoria> categorias = new();
+                foreach (DbSetCategoria dbSetCategoria in dbSetCategorias)
+                    categorias.Add(Criar(dbSetCategoria));
+                return categorias;
+            }
         }
     }
 }

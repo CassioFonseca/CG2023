@@ -36,5 +36,9 @@ namespace CGServer.Repository
             T? result = DbSetRepository.First();
             return result;
         }
+        public List<T> DbSetGetAll()
+        {
+            return DbSetRepository.ToList();
+        }
     }
 }

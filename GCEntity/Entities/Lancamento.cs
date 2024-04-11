@@ -103,15 +103,17 @@ namespace CGEntity.Entities
         public Lancamento(DateTime data, int idFavorecido, int idPagador, int idModalidade, int idInstituicao, int idCategoria,
             int idSubCategoria, int idFornecedor, string descricao, double valor, bool recorrente)
         {
-            DbSetLancamento = new DbSetLancamento();
-            DbSetLancamento.Data = data;
-            DbSetLancamento.FavorecidoId = idFavorecido;
-            DbSetLancamento.PagadorId = idPagador;
-            DbSetLancamento.ModalidadeId = idModalidade;
-            DbSetLancamento.InstituicaoId = idInstituicao;
-            DbSetLancamento.CategoriaId = idCategoria;
-            DbSetLancamento.SubCategoriaId = idSubCategoria;
-            DbSetLancamento.FornecedorId = idFornecedor;
+            DbSetLancamento = new()
+            {
+                Data = data,
+                FavorecidoId = idFavorecido,
+                PagadorId = idPagador,
+                ModalidadeId = idModalidade,
+                InstituicaoId = idInstituicao,
+                CategoriaId = idCategoria,
+                SubCategoriaId = idSubCategoria,
+                FornecedorId = idFornecedor
+            };
             Descricao = descricao;
             Valor = valor;
             Recorrente = recorrente;

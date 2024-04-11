@@ -5,28 +5,26 @@ namespace CGController
 {
     public class CategoriaController
     {
-        private CategoriaUC categoriaUC;
-        public CategoriaController() 
-        { 
-            this.categoriaUC = new CategoriaUC();
-        }
-        public int Adicionar(string descricao)
+        public static int Add(string descricao)
         {
-            return categoriaUC.Adicionar(descricao);
+            return CategoriaUC.Adicionar(descricao);
         }
-        public Categoria Criar(string descricao)
+        public static Categoria New(string descricao)
         {
-            return categoriaUC.Criar(descricao);
+            return CategoriaUC.Criar(descricao);
         }
-        public Categoria? GetId(int id)
+        public static Categoria? GetId(int id)
         {
-            return categoriaUC.GetId(id);
+            return CategoriaUC.GetId(id);
 
         }
-        public Categoria? GetFirst()
+        public static Categoria? GetFirst()
         {
-            return categoriaUC.GetFirst();
+            return CategoriaUC.First;
         }
-
+        public static List<Categoria>? GetAll()
+        {
+            return CategoriaUC.GetAll;
+        }
     }
 }

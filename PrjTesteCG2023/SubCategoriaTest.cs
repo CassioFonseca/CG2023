@@ -8,11 +8,11 @@ namespace CGTeste
         [Fact]
         public void TestCreateClass1()
         {
-            SubCategoriaController subCategoriaController = new SubCategoriaController();
+            SubCategoriaController subCategoriaController = new();
             int id = 0;
-            string descricaoSubCategoria = String.Format("Nova SubCategoria {0}", Guid.NewGuid().ToString().Substring(0, 5));
-            CategoriaController categoriaController = new CategoriaController();
-            Categoria? categoria = categoriaController.GetFirst();
+            string descricaoSubCategoria = String.Format("Nova SubCategoria {0}", Guid.NewGuid().ToString()[..5]);
+            CategoriaController categoriaController = new();
+            Categoria? categoria = CategoriaController.GetFirst();
             Assert.NotNull(categoria);
             int idNewSubCategoria = subCategoriaController.Adicionar(categoria.Id, descricaoSubCategoria);
             SubCategoria? subCategoria = subCategoriaController.GetId(idNewSubCategoria);

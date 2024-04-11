@@ -9,11 +9,11 @@ namespace CGTeste
         [Fact]
         public void TestCreateClass1()
         {
-            LancamentoController lancamentoController = new LancamentoController();
+            LancamentoController lancamentoController = new();
             int id = 0;
             int idCategoria = GetIdCategoria();
             int idSubCategoria = GetIdSubCategoria(idCategoria);
-            string descricaoLancamento = String.Format("Novo Lancamento {0}", Guid.NewGuid().ToString().Substring(0, 5));
+            string descricaoLancamento = String.Format("Novo Lancamento {0}", Guid.NewGuid().ToString()[..5]);
             Double valorLancamento = 10000.99;
             bool recorrente = false;
             int idNewLancamento = lancamentoController.Adicionar(DateTime.Now, GetIdFavorecido(), GetIdPagador(), GetIdModalidade(), GetIdInstituicao(), idCategoria, idSubCategoria, GetIdForncedor(),
@@ -25,54 +25,54 @@ namespace CGTeste
 
         }
 
-        private int GetIdFavorecido()
+        private static int GetIdFavorecido()
         {
-            FavorecidoController favorecidoController = new FavorecidoController();
-            Favorecido? favorecido = favorecidoController.GetFirst();
+            FavorecidoController favorecidoController = new();
+            Favorecido? favorecido = favorecidoController.First;
             if (favorecido != null) { return favorecido.Id; }
             else { return 0; }
         }
 
-        private int GetIdPagador()
+        private static int GetIdPagador()
         {
-            PagadorController pagadorController = new PagadorController();
+            PagadorController pagadorController = new();
             Pagador? pagador = pagadorController.GetFirst();
             if (pagador != null) { return pagador.Id; }
             else { return 0; }
         }
-        private int GetIdModalidade()
+        private static int GetIdModalidade()
         {
-            ModalidadeController modalidadeController = new ModalidadeController();
+            ModalidadeController modalidadeController = new();
             Modalidade? modalidade = modalidadeController.GetFirst();
             if (modalidade != null) { return modalidade.Id; }
             else { return 0; }
         }
-        private int GetIdInstituicao()
+        private static int GetIdInstituicao()
         {
-            InstituicaoController instituicaoController = new InstituicaoController();
+            InstituicaoController instituicaoController = new();
             Instituicao? instituicao = instituicaoController.GetFirst();
             if (instituicao != null) { return instituicao.Id; }
             else { return 0; }
         }
 
-        private int GetIdCategoria()
+        private static int GetIdCategoria()
         {
-            CategoriaController categoriaController = new CategoriaController();
-            Categoria? categoria = categoriaController.GetFirst();
+            CategoriaController categoriaController = new();
+            Categoria? categoria = CategoriaController.GetFirst();
             if (categoria != null) { return categoria.Id; }
             else { return 0; }
         }
 
-        private int GetIdSubCategoria(int idCategoria)
+        private static int GetIdSubCategoria(int idCategoria)
         {
-            SubCategoriaController subCategoriaController = new SubCategoriaController();
+            SubCategoriaController subCategoriaController = new();
             SubCategoria? subcategoria = subCategoriaController.GetFirst(idCategoria);
             if (subcategoria != null) { return subcategoria.Id; }
             else { return 0; }
         }
-        private int GetIdForncedor()
+        private static int GetIdForncedor()
         {
-            FornecedorController fornecedorController = new FornecedorController();
+            FornecedorController fornecedorController = new();
             Fornecedor? fornecedor = fornecedorController.GetFirst();
             if (fornecedor != null) { return fornecedor.Id; }
             else { return 0; }
