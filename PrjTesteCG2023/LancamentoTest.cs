@@ -41,8 +41,7 @@ namespace CGTeste
         }
         private static int GetIdModalidade()
         {
-            ModalidadeController modalidadeController = new();
-            Modalidade? modalidade = modalidadeController.GetFirst();
+            Modalidade? modalidade = ModalidadeController.GetFirst();
             if (modalidade != null) { return modalidade.Id; }
             else { return 0; }
         }

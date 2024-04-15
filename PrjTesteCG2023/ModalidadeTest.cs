@@ -8,14 +8,13 @@ namespace CGTeste
         [Fact]
         public void TestCreateClass1()
         {
-            ModalidadeController modalidadeController = new ModalidadeController();
             int id = 0;
-            string nomeModalidade = String.Format("Nova Modalidade {0}", Guid.NewGuid().ToString().Substring(0, 5));
-            int idNewModalidade = modalidadeController.Adicionar(nomeModalidade);
-            Modalidade? modalidade = modalidadeController.GetId(idNewModalidade);
+            string dsModalidade = String.Format("Nova Modalidade {0}", Guid.NewGuid().ToString()[..5]);
+            int idNewModalidade = ModalidadeController.Add(dsModalidade);
+            Modalidade? modalidade = ModalidadeController.GetId(idNewModalidade);
             Assert.NotNull(modalidade);
             Assert.NotEqual(id, modalidade.Id);
-            Assert.Equal(nomeModalidade, modalidade.Nome);
+            Assert.Equal(dsModalidade, modalidade.Descricao);
         }
     }
 }

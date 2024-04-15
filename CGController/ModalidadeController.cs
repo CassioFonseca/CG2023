@@ -6,28 +6,33 @@ namespace CGController
 {
     public class ModalidadeController
     {
-        private ModalidadeUC ModalidadeUC;
-        public ModalidadeController()
+        public static int Add(string descricao)
         {
-            this.ModalidadeUC = new ModalidadeUC();
+            return ModalidadeUC.Add(descricao);
         }
-        public int Adicionar(string nome)
+        public static Modalidade New(string descricao)
         {
-            return ModalidadeUC.Adicionar(nome);
+            return ModalidadeUC.New(descricao);
         }
-        public Modalidade Criar(string nome)
-        {
-            return ModalidadeUC.Criar(nome);
-        }
-        public Modalidade? GetId(int id)
+        public static Modalidade? GetId(int id)
         {
             return ModalidadeUC.GetId(id);
-
         }
-        public Modalidade? GetFirst()
+        public static Modalidade? GetFirst()
         {
-            return ModalidadeUC.GetFirst();
-
+            return ModalidadeUC.First;
+        }
+        public static List<Modalidade>? GetAll()
+        {
+            return ModalidadeUC.GetAll;
+        }
+        public static void Change(Modalidade modalidade)
+        {
+            ModalidadeUC.Change(modalidade);
+        }
+        public static void Remove(Modalidade modalidade)
+        {
+            ModalidadeUC.Remove(modalidade);
         }
     }
 }

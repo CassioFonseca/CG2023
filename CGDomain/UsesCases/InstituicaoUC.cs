@@ -8,6 +8,10 @@ namespace CGDomain.UsesCases
     public class InstituicaoUC
     {
         public InstituicaoUC() { }
+        private static InstituicaoRepository Repository
+        {
+            get{ return new(); }
+        }
         public static int Add(string nome)
         {
             if (string.IsNullOrWhiteSpace(nome))
@@ -21,9 +25,8 @@ namespace CGDomain.UsesCases
         }
         public static void Add(Instituicao instituicao)
         {
-            InstituicaoRepository instituicaoRepository = new();
-            instituicaoRepository.Add(instituicao.DbSetInstituicao);
-            instituicaoRepository.Salve();
+            Repository.Add(instituicao.DbSetInstituicao);
+            Repository.Salve();
         }
         public static Instituicao New(string nome)
         {
@@ -35,18 +38,15 @@ namespace CGDomain.UsesCases
         }
         public static void Change(Instituicao instituicao)
         {
-            InstituicaoRepository instituicaoRepository = new();
-            instituicaoRepository.Update(instituicao.DbSetInstituicao);
+            Repository.Update(instituicao.DbSetInstituicao);
         }
         public static void Remove(Instituicao instituicao)
         {
-            InstituicaoRepository instituicaoRepository = new();
-            instituicaoRepository.Remove(instituicao.DbSetInstituicao);
+            Repository.Remove(instituicao.DbSetInstituicao);
         }
         public static Instituicao? GetId(int id)
         {
-            InstituicaoRepository instituicaoRepository = new();
-            DbSetInstituicao? dbSetInstituicao = instituicaoRepository.GetId(id);
+            DbSetInstituicao? dbSetInstituicao = Repository.GetId(id);
             if (dbSetInstituicao == null) return null;
             Instituicao instituicao = New(dbSetInstituicao);
             return instituicao;
@@ -55,8 +55,7 @@ namespace CGDomain.UsesCases
         {
             get
             {
-                InstituicaoRepository instituicaoRepository = new();
-                DbSetInstituicao? dbSetInstituicao = instituicaoRepository.GetFirst();
+                DbSetInstituicao? dbSetInstituicao = Repository.GetFirst();
                 if (dbSetInstituicao == null) return null;
                 Instituicao instituicao = New(dbSetInstituicao);
                 return instituicao;
@@ -66,7 +65,7 @@ namespace CGDomain.UsesCases
         {
             get
             {
-                InstituicaoRepository instituicaoRepository = new();
+                InstituicaoRepository instituicaoRepository = Repository;
                 List<DbSetInstituicao> dbSetInstituicoes = instituicaoRepository.GetAll();
                 if (dbSetInstituicoes == null) return null;
                 List<Instituicao> instituicoes = new();

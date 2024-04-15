@@ -8,41 +8,70 @@ namespace CGDomain.UsesCases
     public class ModalidadeUC
     {
         public ModalidadeUC() { }
-        public int Adicionar(string value)
+        private static ModalidadeRepository Repository
         {
-            Modalidade modalidade = Criar(value);
-            ModalidadeRepository modalidadeRepository = new ModalidadeRepository();
-            modalidadeRepository.Add(modalidade.DbSetModalidade);
-            Salvar(modalidadeRepository);
-            return modalidade.Id;
+            get { return new(); }
         }
-        public Modalidade Criar(string value)
+        public static int Add(string descricao)
         {
-            return new Modalidade(value);
+            if (string.IsNullOrWhiteSpace(descricao))
+            {
+                throw new ArgumentException($"'{nameof(descricao)}' cannot be null or whitespace.", nameof(descricao));
+            }
+
+            Modalidade categoria = New(descricao);
+            Add(categoria);
+            return categoria.Id;
         }
-        public Modalidade Criar(DbSetModalidade dbSetModalidade)
+        public static void Add(Modalidade modalidade)
+        {
+            Repository.Add(modalidade.DbSetModalidade);
+            Repository.Salve();
+        }
+        public static Modalidade New(string descricao)
+        {
+            return new Modalidade(descricao);
+        }
+        public static Modalidade New(DbSetModalidade dbSetModalidade)
         {
             return new Modalidade(dbSetModalidade);
         }
-        private void Salvar(ModalidadeRepository modalidadeRepository)
+        public static void Change(Modalidade modalidade)
         {
-            modalidadeRepository.Salve();
+            Repository.Update(modalidade.DbSetModalidade);
         }
-        public Modalidade? GetId(int id)
+        public static void Remove(Modalidade modalidade)
         {
-            ModalidadeRepository modalidadeRepository = new ModalidadeRepository();
-            DbSetModalidade? dbSetModalidade = modalidadeRepository.GetId(id);
+            Repository.Remove(modalidade.DbSetModalidade);
+        }
+        public static Modalidade? GetId(int id)
+        {
+            DbSetModalidade? dbSetModalidade = Repository.GetId(id);
             if (dbSetModalidade == null) return null;
-            Modalidade modalidade = Criar(dbSetModalidade);
+            Modalidade modalidade = New(dbSetModalidade);
             return modalidade;
         }
-        public Modalidade? GetFirst()
+        public static Modalidade? First
         {
-            ModalidadeRepository modalidadeRepository = new ModalidadeRepository();
-            DbSetModalidade? dbSetModalidade = modalidadeRepository.GetFirst();
-            if (dbSetModalidade == null) return null;
-            Modalidade modalidade = Criar(dbSetModalidade);
-            return modalidade;
+            get
+            {
+                DbSetModalidade? dbSetModalidade = Repository.GetFirst();
+                if (dbSetModalidade == null) return null;
+                Modalidade modalidade = New(dbSetModalidade);
+                return modalidade;
+            }
+        }
+        public static List<Modalidade>? GetAll
+        {
+            get
+            {
+                List<DbSetModalidade> dbSetModalidades = Repository.GetAll();
+                if (dbSetModalidades == null) return null;
+                List<Modalidade> modalidades = new();
+                foreach (DbSetModalidade dbSetModalidade in dbSetModalidades)
+                    modalidades.Add(New(dbSetModalidade));
+                return modalidades;
+            }
         }
     }
 }

@@ -6,7 +6,7 @@ namespace CGEntity.Entities
     {
         public DbSetModalidade DbSetModalidade { get; } = new DbSetModalidade();
         public int Id { get { return this.DbSetModalidade.Id; } }
-        public string Nome
+        public string Descricao
         {
             get { return this.DbSetModalidade.Descricao; }
             set
@@ -30,11 +30,11 @@ namespace CGEntity.Entities
             ValidaNome(dbSetModalidade.Descricao);
             DbSetModalidade = dbSetModalidade;
         }
-        private void ValidaNome(string value)
+        private static void ValidaNome(string value)
         {
             if (string.IsNullOrEmpty(value))
             {
-                throw new ArgumentException("O nome da instituicão não pode ser vazio ou nulo.");
+                throw new ArgumentException("O nome da modalidade não pode ser vazio ou nulo.");
             }
         }
     }
