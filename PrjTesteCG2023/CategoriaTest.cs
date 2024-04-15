@@ -10,7 +10,7 @@ namespace CGTeste
         {
             int id = 0;
             string descricaoCategoria = String.Format("Nova Categoria {0}", Guid.NewGuid().ToString()[..5]);
-            int idNewCategoria = CategoriaController.New(descricaoCategoria).Id;
+            int idNewCategoria = CategoriaController.Add(descricaoCategoria);
             Categoria? categoria = CategoriaController.GetId(idNewCategoria);
             Assert.NotNull(categoria);
             Assert.NotEqual(id, categoria.Id);

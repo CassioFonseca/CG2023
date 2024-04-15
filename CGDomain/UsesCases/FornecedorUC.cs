@@ -8,42 +8,72 @@ namespace CGDomain.UsesCases
     public class FornecedorUC
     {
         public FornecedorUC() { }
-        public int Adicionar(string value)
+        public static int Add(string nome)
         {
-            Fornecedor fornecedor = Criar(value);
-            FornecedorRepository fornecedorRepository = new FornecedorRepository();
-            fornecedorRepository.Add(fornecedor.DbSetFornecedor);
-            Salvar(fornecedorRepository);
+            if (string.IsNullOrWhiteSpace(nome))
+            {
+                throw new ArgumentException($"'{nameof(nome)}' cannot be null or whitespace.", nameof(nome));
+            }
+
+            Fornecedor fornecedor = New(nome);
+            Add(fornecedor);
             return fornecedor.Id;
         }
-        public Fornecedor Criar(string value)
+        public static void Add(Fornecedor fornecedor)
         {
-            return new Fornecedor(value);
+            FornecedorRepository fornecedorRepository = new();
+            fornecedorRepository.Add(fornecedor.DbSetFornecedor);
+            fornecedorRepository.Salve();
         }
-        public Fornecedor Criar(DbSetFornecedor dbSetFornecedor)
+        public static Fornecedor New(string nome)
+        {
+            return new Fornecedor(nome);
+        }
+        public static Fornecedor New(DbSetFornecedor dbSetFornecedor)
         {
             return new Fornecedor(dbSetFornecedor);
         }
-        private void Salvar(FornecedorRepository fornecedorRepository)
+        public static void Change(Fornecedor fornecedor)
         {
-            fornecedorRepository.Salve();
+            FornecedorRepository fornecedorRepository = new();
+            fornecedorRepository.Update(fornecedor.DbSetFornecedor);
         }
-
-        public Fornecedor? GetId(int id)
+        public static void Remove(Fornecedor fornecedor)
         {
-            FornecedorRepository fornecedorRepository = new FornecedorRepository();
+            FornecedorRepository fornecedorRepository = new();
+            fornecedorRepository.Remove(fornecedor.DbSetFornecedor);
+        }
+        public static Fornecedor? GetId(int id)
+        {
+            FornecedorRepository fornecedorRepository = new();
             DbSetFornecedor? dbSetFornecedor = fornecedorRepository.GetId(id);
             if (dbSetFornecedor == null) return null;
-            Fornecedor fornecedor = Criar(dbSetFornecedor);
+            Fornecedor fornecedor = New(dbSetFornecedor);
             return fornecedor;
         }
-        public Fornecedor? GetFirst()
+        public static Fornecedor? First
         {
-            FornecedorRepository fornecedorRepository = new FornecedorRepository();
-            DbSetFornecedor? dbSetFornecedor = fornecedorRepository.GetFirst();
-            if (dbSetFornecedor == null) return null;
-            Fornecedor fornecedor = Criar(dbSetFornecedor);
-            return fornecedor;
+            get
+            {
+                FornecedorRepository fornecedorRepository = new();
+                DbSetFornecedor? dbSetFornecedor = fornecedorRepository.GetFirst();
+                if (dbSetFornecedor == null) return null;
+                Fornecedor fornecedor = New(dbSetFornecedor);
+                return fornecedor;
+            }
+        }
+        public static List<Fornecedor>? GetAll
+        {
+            get
+            {
+                FornecedorRepository fornecedorRepository = new();
+                List<DbSetFornecedor> dbSetFornecedores = fornecedorRepository.GetAll();
+                if (dbSetFornecedores == null) return null;
+                List<Fornecedor> fornecedores = new();
+                foreach (DbSetFornecedor dbSetFornecedor in dbSetFornecedores)
+                    fornecedores.Add(New(dbSetFornecedor));
+                return fornecedores;
+            }
         }
     }
 }

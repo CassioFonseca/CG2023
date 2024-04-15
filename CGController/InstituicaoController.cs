@@ -6,28 +6,12 @@ namespace CGController
 {
     public class InstituicaoController
     {
-        private InstituicaoUC InstituicaoUC;
-        public InstituicaoController()
-        {
-            this.InstituicaoUC = new InstituicaoUC();
-        }
-        public int Adicionar(string nome)
-        {
-            return InstituicaoUC.Adicionar(nome);
-        }
-        public Instituicao Criar(string nome)
-        {
-            return InstituicaoUC.Criar(nome);
-        }
-        public Instituicao? GetId(int id)
-        {
-            return InstituicaoUC.GetId(id);
-
-        }
-        public Instituicao? GetFirst()
-        {
-            return InstituicaoUC.GetFirst();
-
-        }
+        public static int Add(string nome) => InstituicaoUC.Add(nome);
+        public static Instituicao New(string nome) => InstituicaoUC.New(nome);
+        public static Instituicao? GetId(int id) => InstituicaoUC.GetId(id);
+        public static Instituicao? GetFirst => InstituicaoUC.First;
+        public static List<Instituicao>? GetAll() => InstituicaoUC.GetAll;
+        public static void Change(Instituicao instituicao) => InstituicaoUC.Change(instituicao);
+        public static void Remove(Instituicao instituicao) => InstituicaoUC.Remove(instituicao);
     }
 }

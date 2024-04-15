@@ -48,8 +48,7 @@ namespace CGTeste
         }
         private static int GetIdInstituicao()
         {
-            InstituicaoController instituicaoController = new();
-            Instituicao? instituicao = instituicaoController.GetFirst();
+            Instituicao? instituicao = InstituicaoController.GetFirst;
             if (instituicao != null) { return instituicao.Id; }
             else { return 0; }
         }
@@ -70,8 +69,7 @@ namespace CGTeste
         }
         private static int GetIdForncedor()
         {
-            FornecedorController fornecedorController = new();
-            Fornecedor? fornecedor = fornecedorController.GetFirst();
+            Fornecedor? fornecedor = FornecedorController.GetFirst;
             if (fornecedor != null) { return fornecedor.Id; }
             else { return 0; }
         }

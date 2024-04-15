@@ -29,7 +29,7 @@ namespace CGEntity.Entities
             ValidaNome(dbSetFornecedor.Nome);
             DbSetFornecedor = dbSetFornecedor;
         }
-        private void ValidaNome(string value)
+        private static void ValidaNome(string value)
         {
             if (string.IsNullOrEmpty(value))
             {

@@ -8,42 +8,72 @@ namespace CGDomain.UsesCases
     public class InstituicaoUC
     {
         public InstituicaoUC() { }
-        public int Adicionar(string value)
+        public static int Add(string nome)
         {
-            Instituicao instituicao = Criar(value);
-            InstituicaoRepository instituicaoRepository = new InstituicaoRepository();
-            instituicaoRepository.Add(instituicao.DbSetInstituicao);
-            Salvar(instituicaoRepository);
+            if (string.IsNullOrWhiteSpace(nome))
+            {
+                throw new ArgumentException($"'{nameof(nome)}' cannot be null or whitespace.", nameof(nome));
+            }
+
+            Instituicao instituicao = New(nome);
+            Add(instituicao);
             return instituicao.Id;
         }
-        public Instituicao Criar(string value)
+        public static void Add(Instituicao instituicao)
         {
-            return new Instituicao(value);
+            InstituicaoRepository instituicaoRepository = new();
+            instituicaoRepository.Add(instituicao.DbSetInstituicao);
+            instituicaoRepository.Salve();
         }
-        public Instituicao Criar(DbSetInstituicao dbSetInstituicao)
+        public static Instituicao New(string nome)
+        {
+            return new Instituicao(nome);
+        }
+        public static Instituicao New(DbSetInstituicao dbSetInstituicao)
         {
             return new Instituicao(dbSetInstituicao);
         }
-        private void Salvar(InstituicaoRepository instituicaoRepository)
+        public static void Change(Instituicao instituicao)
         {
-            instituicaoRepository.Salve();
+            InstituicaoRepository instituicaoRepository = new();
+            instituicaoRepository.Update(instituicao.DbSetInstituicao);
         }
-
-        public Instituicao? GetId(int id)
+        public static void Remove(Instituicao instituicao)
         {
-            InstituicaoRepository instituicaoRepository = new InstituicaoRepository();
+            InstituicaoRepository instituicaoRepository = new();
+            instituicaoRepository.Remove(instituicao.DbSetInstituicao);
+        }
+        public static Instituicao? GetId(int id)
+        {
+            InstituicaoRepository instituicaoRepository = new();
             DbSetInstituicao? dbSetInstituicao = instituicaoRepository.GetId(id);
             if (dbSetInstituicao == null) return null;
-            Instituicao instituicao = Criar(dbSetInstituicao);
+            Instituicao instituicao = New(dbSetInstituicao);
             return instituicao;
         }
-        public Instituicao? GetFirst()
+        public static Instituicao? First
         {
-            InstituicaoRepository instituicaoRepository = new InstituicaoRepository();
-            DbSetInstituicao? dbSetInstituicao = instituicaoRepository.GetFirst();
-            if (dbSetInstituicao == null) return null;
-            Instituicao instituicao = Criar(dbSetInstituicao);
-            return instituicao;
+            get
+            {
+                InstituicaoRepository instituicaoRepository = new();
+                DbSetInstituicao? dbSetInstituicao = instituicaoRepository.GetFirst();
+                if (dbSetInstituicao == null) return null;
+                Instituicao instituicao = New(dbSetInstituicao);
+                return instituicao;
+            }
+        }
+        public static List<Instituicao>? GetAll
+        {
+            get
+            {
+                InstituicaoRepository instituicaoRepository = new();
+                List<DbSetInstituicao> dbSetInstituicoes = instituicaoRepository.GetAll();
+                if (dbSetInstituicoes == null) return null;
+                List<Instituicao> instituicoes = new();
+                foreach (DbSetInstituicao dbSetInstituicao in dbSetInstituicoes)
+                    instituicoes.Add(New(dbSetInstituicao));
+                return instituicoes;
+            }
         }
     }
 }

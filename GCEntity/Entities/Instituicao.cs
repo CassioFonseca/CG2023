@@ -30,7 +30,7 @@ namespace CGEntity.Entities
             ValidaNome(dbSetInstituicao.Nome);
             DbSetInstituicao = dbSetInstituicao;
         }
-        private void ValidaNome(string value)
+        private static void ValidaNome(string value)
         {
             if (string.IsNullOrEmpty(value))
             {

@@ -6,26 +6,12 @@ namespace CGController
 {
     public class FornecedorController
     {
-        private FornecedorUC fornecedorUC;
-        public FornecedorController()
-        {
-            this.fornecedorUC = new FornecedorUC();
-        }
-        public int Adicionar(string nome)
-        {
-            return fornecedorUC.Adicionar(nome);
-        }
-        public Fornecedor Criar(string nome)
-        {
-            return fornecedorUC.Criar(nome);
-        }
-        public Fornecedor? GetId(int id)
-        {
-            return fornecedorUC.GetId(id);
-        }
-        public Fornecedor? GetFirst()
-        {
-            return fornecedorUC.GetFirst();
-        }
+        public static int Add(string nome) => FornecedorUC.Add(nome);
+        public static Fornecedor New(string nome) => FornecedorUC.New(nome);
+        public static Fornecedor? GetId(int id) => FornecedorUC.GetId(id);
+        public static Fornecedor? GetFirst => FornecedorUC.First;
+        public static List<Fornecedor>? GetAll() => FornecedorUC.GetAll;
+        public static void Change(Fornecedor favorecido) => FornecedorUC.Change(favorecido);
+        public static void Remove(Fornecedor favorecido) => FornecedorUC.Remove(favorecido);
     }
 }
