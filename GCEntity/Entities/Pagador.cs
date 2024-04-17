@@ -6,7 +6,7 @@ namespace CGEntity.Entities
     {
         public DbSetPagador DbSetPagador { get; } = new DbSetPagador();
         public int Id { get { return this.DbSetPagador.Id; } }
-        public string Descricao
+        public string Nome
         {
             get { return this.DbSetPagador.Nome; }
             set
@@ -30,7 +30,7 @@ namespace CGEntity.Entities
             ValidaNome(dbSetPagador.Nome);
             DbSetPagador = dbSetPagador;
         }
-        private void ValidaNome(string value)
+        private static void ValidaNome(string value)
         {
             if (string.IsNullOrEmpty(value))
             {

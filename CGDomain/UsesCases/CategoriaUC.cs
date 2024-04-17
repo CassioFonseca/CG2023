@@ -7,6 +7,10 @@ namespace CGDomain.UsesCases
     public class CategoriaUC
     {
         public CategoriaUC() { }
+        private static CategoriaRepository Repository
+        {
+            get { return new(); }
+        }
         public static int Add(string descricao)
         {
             if (string.IsNullOrWhiteSpace(descricao))
@@ -20,9 +24,8 @@ namespace CGDomain.UsesCases
         }
         public static void Add(Categoria categoria)
         {
-            CategoriaRepository categoriaRepository = new();
-            categoriaRepository.Add(categoria.DbSetCategoria);
-            categoriaRepository.Salve();
+            Repository.Add(categoria.DbSetCategoria);
+            Repository.Salve();
         }
         public static Categoria New(string descricao)
         {
@@ -34,19 +37,15 @@ namespace CGDomain.UsesCases
         }
         public static void Change(Categoria categoria)
         {
-            CategoriaRepository categoriaRepository = new();
-            categoriaRepository.Update(categoria.DbSetCategoria);
+            Repository.Update(categoria.DbSetCategoria);
         }
         public static void Remove(Categoria categoria)
         {
-            CategoriaRepository categoriaRepository = new();
-            categoriaRepository.Remove(categoria.DbSetCategoria);
+            Repository.Remove(categoria.DbSetCategoria);
         }
-
         public static Categoria? GetId(int id)
         {
-            CategoriaRepository categoriaRepository = new();
-            DbSetCategoria? dbSetCategoria = categoriaRepository.GetId(id);
+            DbSetCategoria? dbSetCategoria = Repository.GetId(id);
             if (dbSetCategoria == null) return null;
             Categoria categoria = New(dbSetCategoria);
             return categoria;
@@ -55,8 +54,7 @@ namespace CGDomain.UsesCases
         {
             get
             {
-                CategoriaRepository categoriaRepository = new();
-                DbSetCategoria? dbSetCategoria = categoriaRepository.GetFirst();
+                DbSetCategoria? dbSetCategoria = Repository.GetFirst();
                 if (dbSetCategoria == null) return null;
                 Categoria categoria = New(dbSetCategoria);
                 return categoria;
@@ -66,8 +64,7 @@ namespace CGDomain.UsesCases
         {
             get
             {
-                CategoriaRepository categoriaRepository = new();
-                List<DbSetCategoria> dbSetCategorias = categoriaRepository.GetAll();
+                List<DbSetCategoria> dbSetCategorias = Repository.GetAll();
                 if (dbSetCategorias == null) return null;
                 List<Categoria> categorias = new();
                 foreach (DbSetCategoria dbSetCategoria in dbSetCategorias)

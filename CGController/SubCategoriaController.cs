@@ -5,30 +5,13 @@ namespace CGController
 {
     public class SubCategoriaController
     {
-        private SubCategoriaUC SubCategoriaUC;
-        public SubCategoriaController()
-        {
-            this.SubCategoriaUC = new SubCategoriaUC();
-        }
-        public int Adicionar(int idCategoria, string descSubCategoria)
-        {
-            return SubCategoriaUC.Adicionar(idCategoria, descSubCategoria);
-        }
-        public SubCategoria Criar(int idCategoria, string descSubCategoria)
-        {
-            return SubCategoriaUC.Criar(idCategoria, descSubCategoria);
-        }
-        public SubCategoria? GetId(int id)
-        {
-            return SubCategoriaUC.GetId(id);
-        }
-        public SubCategoria? GetFirst()
-        {
-            return SubCategoriaUC.GetFirst();
-        }
-        public SubCategoria? GetFirst(int idCategoria)
-        {
-            return SubCategoriaUC.GetFirst(idCategoria);
-        }
+        public static int Add(int idCategoria, string dsSubCategoria) => SubCategoriaUC.Add(idCategoria, dsSubCategoria);
+        public static SubCategoria New(int idCategoria, string dsSubCategoria) => SubCategoriaUC.New(idCategoria, dsSubCategoria);
+        public static SubCategoria? GetId(int id) => SubCategoriaUC.GetId(id);
+        public static SubCategoria? GetFirst => SubCategoriaUC.First;
+        public static SubCategoria? GetFirstCategoria(int idCategoria) => SubCategoriaUC.GetFirstCategoria(idCategoria);
+        public static List<SubCategoria>? GetAll() => SubCategoriaUC.GetAll;
+        public static void Change(SubCategoria categoria) => SubCategoriaUC.Change(categoria);
+        public static void Remove(SubCategoria categoria) => SubCategoriaUC.Remove(categoria);
     }
 }

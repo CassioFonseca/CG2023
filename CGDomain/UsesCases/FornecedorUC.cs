@@ -8,6 +8,10 @@ namespace CGDomain.UsesCases
     public class FornecedorUC
     {
         public FornecedorUC() { }
+        private static FornecedorRepository Repository
+        {
+            get { return new(); }
+        }
         public static int Add(string nome)
         {
             if (string.IsNullOrWhiteSpace(nome))
@@ -21,9 +25,8 @@ namespace CGDomain.UsesCases
         }
         public static void Add(Fornecedor fornecedor)
         {
-            FornecedorRepository fornecedorRepository = new();
-            fornecedorRepository.Add(fornecedor.DbSetFornecedor);
-            fornecedorRepository.Salve();
+            Repository.Add(fornecedor.DbSetFornecedor);
+            Repository.Salve();
         }
         public static Fornecedor New(string nome)
         {
@@ -35,18 +38,15 @@ namespace CGDomain.UsesCases
         }
         public static void Change(Fornecedor fornecedor)
         {
-            FornecedorRepository fornecedorRepository = new();
-            fornecedorRepository.Update(fornecedor.DbSetFornecedor);
+            Repository.Update(fornecedor.DbSetFornecedor);
         }
         public static void Remove(Fornecedor fornecedor)
         {
-            FornecedorRepository fornecedorRepository = new();
-            fornecedorRepository.Remove(fornecedor.DbSetFornecedor);
+            Repository.Remove(fornecedor.DbSetFornecedor);
         }
         public static Fornecedor? GetId(int id)
         {
-            FornecedorRepository fornecedorRepository = new();
-            DbSetFornecedor? dbSetFornecedor = fornecedorRepository.GetId(id);
+            DbSetFornecedor? dbSetFornecedor = Repository.GetId(id);
             if (dbSetFornecedor == null) return null;
             Fornecedor fornecedor = New(dbSetFornecedor);
             return fornecedor;
@@ -55,8 +55,7 @@ namespace CGDomain.UsesCases
         {
             get
             {
-                FornecedorRepository fornecedorRepository = new();
-                DbSetFornecedor? dbSetFornecedor = fornecedorRepository.GetFirst();
+                DbSetFornecedor? dbSetFornecedor = Repository.GetFirst();
                 if (dbSetFornecedor == null) return null;
                 Fornecedor fornecedor = New(dbSetFornecedor);
                 return fornecedor;
@@ -66,8 +65,7 @@ namespace CGDomain.UsesCases
         {
             get
             {
-                FornecedorRepository fornecedorRepository = new();
-                List<DbSetFornecedor> dbSetFornecedores = fornecedorRepository.GetAll();
+                List<DbSetFornecedor> dbSetFornecedores = Repository.GetAll();
                 if (dbSetFornecedores == null) return null;
                 List<Fornecedor> fornecedores = new();
                 foreach (DbSetFornecedor dbSetFornecedor in dbSetFornecedores)

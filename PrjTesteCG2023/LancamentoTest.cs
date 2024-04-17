@@ -22,26 +22,22 @@ namespace CGTeste
             Assert.NotNull(lancamento);
             Assert.NotEqual(id, lancamento.Id);
             Assert.Equal(descricaoLancamento, lancamento.Descricao);
-
         }
-
         private static int GetIdFavorecido()
         {
             Favorecido? favorecido = FavorecidoController.GetFirst;
             if (favorecido != null) { return favorecido.Id; }
             else { return 0; }
         }
-
         private static int GetIdPagador()
         {
-            PagadorController pagadorController = new();
-            Pagador? pagador = pagadorController.GetFirst();
+            Pagador? pagador = PagadorController.GetFirst;
             if (pagador != null) { return pagador.Id; }
             else { return 0; }
         }
         private static int GetIdModalidade()
         {
-            Modalidade? modalidade = ModalidadeController.GetFirst();
+            Modalidade? modalidade = ModalidadeController.GetFirst;
             if (modalidade != null) { return modalidade.Id; }
             else { return 0; }
         }
@@ -54,15 +50,13 @@ namespace CGTeste
 
         private static int GetIdCategoria()
         {
-            Categoria? categoria = CategoriaController.GetFirst();
+            Categoria? categoria = CategoriaController.GetFirst;
             if (categoria != null) { return categoria.Id; }
             else { return 0; }
         }
-
         private static int GetIdSubCategoria(int idCategoria)
         {
-            SubCategoriaController subCategoriaController = new();
-            SubCategoria? subcategoria = subCategoriaController.GetFirst(idCategoria);
+            SubCategoria? subcategoria = SubCategoriaController.GetFirstCategoria(idCategoria);
             if (subcategoria != null) { return subcategoria.Id; }
             else { return 0; }
         }
@@ -72,6 +66,8 @@ namespace CGTeste
             if (fornecedor != null) { return fornecedor.Id; }
             else { return 0; }
         }
+    }
+}
 
 
 
@@ -149,5 +145,3 @@ namespace CGTeste
                 idCategoria, idSubCategoria, idFornecedor, descricao, valor, recorrente));
 
         }*/
-    }
-}

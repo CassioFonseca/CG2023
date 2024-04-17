@@ -7,50 +7,79 @@ namespace CGDomain.UsesCases
     public class SubCategoriaUC
     {
         public SubCategoriaUC() { }
-        public int Adicionar(int idCategoria,string descSubCategoria)
+        private static SubCategoriaRepository Repository
         {
-            SubCategoria subCategoria = Criar(idCategoria, descSubCategoria);
-            SubCategoriaRepository subCategoriaRepository = new SubCategoriaRepository();
-            subCategoriaRepository.Add(subCategoria.DbSetSubCategoria);
-            Salvar(subCategoriaRepository);
+            get { return new(); }
+        }
+        public static int Add(int idCategoria, string dsSubCategoria)
+        {
+            if (string.IsNullOrWhiteSpace(dsSubCategoria))
+            {
+                throw new ArgumentException($"'{nameof(dsSubCategoria)}' cannot be null or whitespace.", nameof(dsSubCategoria));
+            }
+            SubCategoria subCategoria = New(idCategoria, dsSubCategoria);
+            Add(subCategoria);
             return subCategoria.Id;
         }
-        public SubCategoria Criar(int idCategoria, string descSubCategoria)
+        public static void Add(SubCategoria subCategoria)
         {
-            return new SubCategoria(idCategoria, descSubCategoria);
+            Repository.Add(subCategoria.DbSetSubCategoria);
+            Repository.Salve();
         }
-        public SubCategoria Criar(DbSetSubCategoria dbSetSubCategoria)
+        public static SubCategoria New(int idCategoria, string dsSubCategoria)
+        {
+            return new SubCategoria(idCategoria, dsSubCategoria);
+        }
+        public static SubCategoria New(DbSetSubCategoria dbSetSubCategoria)
         {
             return new SubCategoria(dbSetSubCategoria);
         }
-        private void Salvar(SubCategoriaRepository pagadorRepository)
+        public static void Change(SubCategoria subCategoria)
         {
-            pagadorRepository.Salve();
+            Repository.Update(subCategoria.DbSetSubCategoria);
         }
-        public SubCategoria? GetId(int id)
+        public static void Remove(SubCategoria subCategoria)
         {
-            SubCategoriaRepository subCategoriaRepository = new SubCategoriaRepository();
-            DbSetSubCategoria? dbSetSubCategoria = subCategoriaRepository.GetId(id);
+            Repository.Remove(subCategoria.DbSetSubCategoria);
+        }
+        public static SubCategoria? GetId(int id)
+        {
+            DbSetSubCategoria? dbSetSubCategoria = Repository.GetId(id);
             if (dbSetSubCategoria == null) return null;
-            SubCategoria subCategoria = Criar(dbSetSubCategoria);
+            SubCategoria subCategoria = New(dbSetSubCategoria);
             return subCategoria;
         }
-        public SubCategoria? GetFirst()
+        public static SubCategoria? First
         {
-            SubCategoriaRepository subCategoriaRepository = new SubCategoriaRepository();
-            DbSetSubCategoria? dbSetSubCategoria = subCategoriaRepository.GetFirst();
+            get
+            {
+                DbSetSubCategoria? dbSetSubCategoria = Repository.GetFirst();
+                if (dbSetSubCategoria == null) return null;
+                SubCategoria subCategoria = New(dbSetSubCategoria);
+                return subCategoria;
+            }
+        }
+        public static SubCategoria? GetFirstCategoria(int id)
+        {
+            DbSetSubCategoria? dbSetSubCategoria = Repository.GetFirstCategoria(id);
             if (dbSetSubCategoria == null) return null;
-            SubCategoria subCategoria = Criar(dbSetSubCategoria);
+            SubCategoria subCategoria = New(dbSetSubCategoria);
             return subCategoria;
         }
-        public SubCategoria? GetFirst(int idCategoriaId)
+        public static List<SubCategoria>? GetAll
         {
-            SubCategoriaRepository subCategoriaRepository = new SubCategoriaRepository();
-            DbSetSubCategoria? dbSetSubCategoria = subCategoriaRepository.DbSetGetFirst(idCategoriaId);
-            if (dbSetSubCategoria == null) return null;
-            SubCategoria subCategoria = Criar(dbSetSubCategoria);
-            return subCategoria;
+            get
+            {
+                SubCategoriaRepository subCategoriaRepository = new();
+                List<DbSetSubCategoria> dbSetSubCategorias = subCategoriaRepository.GetAll();
+                if (dbSetSubCategorias == null) return null;
+                List<SubCategoria> subCategorias = new();
+                foreach (DbSetSubCategoria dbSetSubCategoria in dbSetSubCategorias)
+                    subCategorias.Add(New(dbSetSubCategoria));
+                return subCategorias;
+            }
         }
     }
+
 }
 

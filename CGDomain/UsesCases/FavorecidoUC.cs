@@ -7,6 +7,10 @@ namespace CGDomain.UsesCases
     public class FavorecidoUC
     {
         public FavorecidoUC() { }
+        private static FavorecidoRepository Repository
+        {
+            get { return new(); }
+        }
         public static int Add(string nome)
         {
             if (string.IsNullOrWhiteSpace(nome))
@@ -20,9 +24,8 @@ namespace CGDomain.UsesCases
         }
         public static void Add(Favorecido favorecido)
         {
-            FavorecidoRepository favorecidoRepository = new();
-            favorecidoRepository.Add(favorecido.DbSetFavorecido);
-            favorecidoRepository.Salve();
+            Repository.Add(favorecido.DbSetFavorecido);
+            Repository.Salve();
         }
         public static Favorecido New(string nome)
         {
@@ -34,18 +37,15 @@ namespace CGDomain.UsesCases
         }
         public static void Change(Favorecido favorecido)
         {
-            FavorecidoRepository favorecidoRepository = new();
-            favorecidoRepository.Update(favorecido.DbSetFavorecido);
+            Repository.Update(favorecido.DbSetFavorecido);
         }
         public static void Remove(Favorecido favorecido)
         {
-            FavorecidoRepository favorecidoRepository = new();
-            favorecidoRepository.Remove(favorecido.DbSetFavorecido);
+            Repository.Remove(favorecido.DbSetFavorecido);
         }
         public static Favorecido? GetId(int id)
         {
-            FavorecidoRepository favorecidoRepository = new();
-            DbSetFavorecido? dbSetFavorecido = favorecidoRepository.GetId(id);
+            DbSetFavorecido? dbSetFavorecido = Repository.GetId(id);
             if (dbSetFavorecido == null) return null;
             Favorecido favorecido = New(dbSetFavorecido);
             return favorecido;
@@ -54,8 +54,7 @@ namespace CGDomain.UsesCases
         {
             get
             {
-                FavorecidoRepository favorecidoRepository = new();
-                DbSetFavorecido? dbSetFavorecido = favorecidoRepository.GetFirst();
+                DbSetFavorecido? dbSetFavorecido = Repository.GetFirst();
                 if (dbSetFavorecido == null) return null;
                 Favorecido favorecido = New(dbSetFavorecido);
                 return favorecido;
@@ -65,8 +64,7 @@ namespace CGDomain.UsesCases
         {
             get
             {
-                FavorecidoRepository favorecidoRepository = new();
-                List<DbSetFavorecido> dbSetFavorecidos = favorecidoRepository.GetAll();
+                List<DbSetFavorecido> dbSetFavorecidos = Repository.GetAll();
                 if (dbSetFavorecidos == null) return null;
                 List<Favorecido> favorecidos = new();
                 foreach (DbSetFavorecido dbSetFavorecido in dbSetFavorecidos)

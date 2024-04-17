@@ -23,6 +23,8 @@ namespace CGConsole
             Console.WriteLine("3 - Fornecedor");
             Console.WriteLine("4 - Instituição");
             Console.WriteLine("5 - Modalidade");
+            Console.WriteLine("6 - Pagador");
+            Console.WriteLine("7 - Sub Categorias");
             Console.WriteLine("0 - Sair");
             _ = int.TryParse(Console.ReadLine(), out int result);
             switch (result)
@@ -45,6 +47,12 @@ namespace CGConsole
                     break;
                 case 5:
                     MontaMenuModalidade.ShowMenu();
+                    break;
+                case 6:
+                    MontaMenuPagador.ShowMenu();
+                    break;
+                case 7:
+                    MontaMenuSubCategoria.ShowMenu();
                     break;
             }
         }

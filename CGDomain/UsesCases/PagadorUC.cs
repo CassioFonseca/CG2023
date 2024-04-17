@@ -7,41 +7,71 @@ namespace CGDomain.UsesCases
     public class PagadorUC
     {
         public PagadorUC() { }
-        public int Adicionar(string value)
+        private static PagadorRepository Repository
         {
-            Pagador pagador = Criar(value);
-            PagadorRepository pagadorRepository = new PagadorRepository();
-            pagadorRepository.Add(pagador.DbSetPagador);
-            Salvar(pagadorRepository);
+            get { return new(); }
+        }
+        public static int Add(string nome)
+        {
+            if (string.IsNullOrWhiteSpace(nome))
+            {
+                throw new ArgumentException($"'{nameof(nome)}' cannot be null or whitespace.", nameof(nome));
+            }
+
+            Pagador pagador = New(nome);
+            Add(pagador);
             return pagador.Id;
         }
-        public Pagador Criar(string value)
+        public static void Add(Pagador pagador)
         {
-            return new Pagador(value);
+            Repository.Add(pagador.DbSetPagador);
+            Repository.Salve();
         }
-        public Pagador Criar(DbSetPagador dbSetPagador)
+        public static Pagador New(string nome)
         {
-            return new Pagador(dbSetPagador);
+            return new Pagador(nome);
         }
-        private void Salvar(PagadorRepository pagadorRepository)
+        public static Pagador New(DbSetPagador dbSetInstituicao)
         {
-            pagadorRepository.Salve();
+            return new Pagador(dbSetInstituicao);
         }
-        public Pagador? GetId(int id)
+        public static void Change(Pagador pagador)
         {
-            PagadorRepository pagadorRepository = new PagadorRepository();
-            DbSetPagador? dbSetPagador = pagadorRepository.GetId(id);
+            Repository.Update(pagador.DbSetPagador);
+        }
+        public static void Remove(Pagador pagador)
+        {
+            Repository.Remove(pagador.DbSetPagador);
+        }
+        public static Pagador? GetId(int id)
+        {
+            DbSetPagador? dbSetPagador = Repository.GetId(id);
             if (dbSetPagador == null) return null;
-            Pagador pagador = Criar(dbSetPagador);
+            Pagador pagador = New(dbSetPagador);
             return pagador;
         }
-        public Pagador? GetFirst()
+        public static Pagador? First
         {
-            PagadorRepository pagadorRepository = new PagadorRepository();
-            DbSetPagador? dbSetPagador = pagadorRepository.GetFirst();
-            if (dbSetPagador == null) return null;
-            Pagador pagador = Criar(dbSetPagador);
-            return pagador;
+            get
+            {
+                DbSetPagador? dbSetPagador = Repository.GetFirst();
+                if (dbSetPagador == null) return null;
+                Pagador pagador = New(dbSetPagador);
+                return pagador;
+            }
+        }
+        public static List<Pagador>? GetAll
+        {
+            get
+            {
+                PagadorRepository pagadorRepository = Repository;
+                List<DbSetPagador> dbSetPagadores = pagadorRepository.GetAll();
+                if (dbSetPagadores == null) return null;
+                List<Pagador> pagadores = new();
+                foreach (DbSetPagador dbSetPagador in dbSetPagadores)
+                    pagadores.Add(New(dbSetPagador));
+                return pagadores;
+            }
         }
     }
 }
