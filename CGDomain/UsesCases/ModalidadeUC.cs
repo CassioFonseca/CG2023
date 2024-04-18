@@ -25,8 +25,9 @@ namespace CGDomain.UsesCases
         }
         public static void Add(Modalidade modalidade)
         {
-            Repository.Add(modalidade.DbSetModalidade);
-            Repository.Salve();
+            ModalidadeRepository repository = Repository;
+            repository.Add(modalidade.DbSetModalidade);
+            repository.Salve();
         }
         public static Modalidade New(string descricao)
         {

@@ -25,8 +25,9 @@ namespace CGDomain.UsesCases
         }
         public static void Add(Fornecedor fornecedor)
         {
-            Repository.Add(fornecedor.DbSetFornecedor);
-            Repository.Salve();
+            FornecedorRepository repository = Repository;
+            repository.Add(fornecedor.DbSetFornecedor);
+            repository.Salve();
         }
         public static Fornecedor New(string nome)
         {

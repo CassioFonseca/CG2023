@@ -6,7 +6,7 @@ namespace CGEntity.Entities
     {
         public DbSetSubCategoria DbSetSubCategoria { get; } = new DbSetSubCategoria();
         public ICollection<Lancamento>? Lancamentos { get; set; } = new List<Lancamento>();
-        public int? CategoriaId { get { return this.DbSetSubCategoria.Id; } }
+        public int? CategoriaId { get { return this.DbSetSubCategoria.CategoriaId; } }
         public int Id { get { return this.DbSetSubCategoria.Id; } }
         public string Descricao
         {
@@ -31,7 +31,7 @@ namespace CGEntity.Entities
             ValidaDescricao(dbSetSubCategoria.Descricao);
             this.DbSetSubCategoria = dbSetSubCategoria;
         }
-        private void ValidaDescricao(string value)
+        private static void ValidaDescricao(string value)
         {
             if (string.IsNullOrEmpty(value))
             {

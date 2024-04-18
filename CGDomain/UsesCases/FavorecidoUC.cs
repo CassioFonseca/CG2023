@@ -24,8 +24,9 @@ namespace CGDomain.UsesCases
         }
         public static void Add(Favorecido favorecido)
         {
-            Repository.Add(favorecido.DbSetFavorecido);
-            Repository.Salve();
+            FavorecidoRepository repository = Repository;
+            repository.Add(favorecido.DbSetFavorecido);
+            repository.Salve();
         }
         public static Favorecido New(string nome)
         {

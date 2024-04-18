@@ -24,8 +24,9 @@ namespace CGDomain.UsesCases
         }
         public static void Add(Categoria categoria)
         {
-            Repository.Add(categoria.DbSetCategoria);
-            Repository.Salve();
+            CategoriaRepository repository = Repository;
+            repository.Add(categoria.DbSetCategoria);
+            repository.Salve();
         }
         public static Categoria New(string descricao)
         {

@@ -17,15 +17,15 @@ namespace CGDomain.UsesCases
             {
                 throw new ArgumentException($"'{nameof(nome)}' cannot be null or whitespace.", nameof(nome));
             }
-
             Pagador pagador = New(nome);
             Add(pagador);
             return pagador.Id;
         }
         public static void Add(Pagador pagador)
         {
-            Repository.Add(pagador.DbSetPagador);
-            Repository.Salve();
+            PagadorRepository repository = Repository;
+            repository.Add(pagador.DbSetPagador);
+            repository.Salve();
         }
         public static Pagador New(string nome)
         {

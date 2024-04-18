@@ -28,6 +28,7 @@ namespace CGConsole
             {
                 case 0:
                     break;
+                    
                 case 1:
                     AddSubCategoria();
                     break;
@@ -82,7 +83,8 @@ namespace CGConsole
             else
             {
                 foreach (SubCategoria subCategoria in subCategorias)
-                    Console.WriteLine(String.Format("Id: {0} - Descrição {1}", subCategoria.Id, subCategoria.Descricao));
+                    Console.WriteLine(String.Format("Id: {0} - Descrição {1} - Id Categoria {2}", 
+                        subCategoria.Id, subCategoria.Descricao, subCategoria.CategoriaId));
                 Console.WriteLine(string.Format("Total de categorias {0}", subCategorias.Count));
             }
             Console.ReadLine();

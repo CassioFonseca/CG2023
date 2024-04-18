@@ -18,15 +18,15 @@ namespace CGDomain.UsesCases
             {
                 throw new ArgumentException($"'{nameof(nome)}' cannot be null or whitespace.", nameof(nome));
             }
-
             Instituicao instituicao = New(nome);
             Add(instituicao);
             return instituicao.Id;
         }
         public static void Add(Instituicao instituicao)
         {
-            Repository.Add(instituicao.DbSetInstituicao);
-            Repository.Salve();
+            InstituicaoRepository repository = Repository;
+            repository.Add(instituicao.DbSetInstituicao);
+            repository.Salve();
         }
         public static Instituicao New(string nome)
         {

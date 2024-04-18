@@ -23,8 +23,9 @@ namespace CGDomain.UsesCases
         }
         public static void Add(SubCategoria subCategoria)
         {
-            Repository.Add(subCategoria.DbSetSubCategoria);
-            Repository.Salve();
+            SubCategoriaRepository repository = Repository;
+            repository.Add(subCategoria.DbSetSubCategoria);
+            repository.Salve();
         }
         public static SubCategoria New(int idCategoria, string dsSubCategoria)
         {
